@@ -1,5 +1,5 @@
 /* =========================================================
-   SDG ANTIGRAVITY - MODERN SUSTAINABLE CAMPUS PLATFORM
+   SDG CONNECT - MODERN SUSTAINABLE CAMPUS PLATFORM
    Design System, Glassmorphism, Deep Learning Milestones & Components
    ========================================================= */
 
@@ -81,6 +81,169 @@ body {
 .card-glass:hover {
   box-shadow: var(--shadow-lg);
 }
+
+/* Structured activity information inside the student detail modal */
+.activity-detail-hero {
+  padding: 18px 20px;
+  border: 2px solid #93c5fd;
+  border-left: 4px solid var(--bs-primary, #2563eb);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.95), rgba(248, 250, 252, 0.95));
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.activity-detail-card-label {
+  margin-bottom: 10px;
+  color: #1d4ed8;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.activity-detail-hero + .d-flex {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px !important;
+}
+
+.activity-detail-hero + .d-flex .badge {
+  display: flex;
+  min-height: 68px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  border: 2px solid #dbeafe;
+  border-radius: 12px;
+  background: #f8fbff !important;
+  box-shadow: 0 3px 9px rgba(15, 23, 42, 0.06);
+  white-space: normal;
+  text-align: center;
+}
+
+.activity-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.activity-detail-section {
+  min-width: 0;
+  padding: 16px;
+  border: 2px solid #dbeafe;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.activity-detail-section-featured,
+.activity-detail-section:last-child {
+  grid-column: 1 / -1;
+}
+
+.activity-detail-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -16px -16px 13px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #dbeafe;
+  border-radius: 10px 10px 0 0;
+  background: #eff6ff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.activity-detail-section-title i {
+  width: 18px;
+  text-align: center;
+}
+
+.activity-detail-section-content {
+  line-height: 1.55;
+}
+
+.activity-detail-subtitle {
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+@media (max-width: 767.98px) {
+  .activity-detail-grid { grid-template-columns: 1fr; }
+  .activity-detail-section-featured,
+  .activity-detail-section:last-child { grid-column: auto; }
+  .activity-detail-hero + .d-flex { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Centered, consistent SaaS notification dialog */
+body.sdg-dialog-open { overflow: hidden; }
+.sdg-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s ease, visibility .2s ease;
+}
+.sdg-notification-root,
+#sdg-notification-root { position: relative; z-index: 2000; }
+#sdg-notification-root.is-visible .sdg-dialog-backdrop { opacity: 1; visibility: visible; }
+.sdg-notification-dialog {
+  position: relative;
+  width: min(100%, 440px);
+  padding: 30px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  background: var(--bg-surface);
+  color: var(--text-main);
+  border: 1px solid var(--border-card);
+  border-radius: 22px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, .22);
+  transform: translateY(12px) scale(.98);
+  transition: transform .22s ease;
+}
+#sdg-notification-root.is-visible .sdg-notification-dialog { transform: translateY(0) scale(1); }
+.sdg-dialog-close {
+  position: absolute;
+  top: 13px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-muted);
+}
+.sdg-dialog-close:hover { background: var(--bg-main); color: var(--text-main); }
+.sdg-dialog-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  font-size: 1.55rem;
+}
+.sdg-dialog-icon.is-success { color: #047857; background: var(--success-soft); }
+.sdg-dialog-icon.is-error { color: #dc2626; background: var(--danger-soft); }
+.sdg-dialog-icon.is-warning { color: #b45309; background: var(--warning-soft); }
+.sdg-dialog-icon.is-info { color: #0369a1; background: var(--info-soft); }
+.sdg-dialog-copy { max-width: 360px; }
+.sdg-dialog-kicker { color: var(--brand-primary); font-size: .68rem; font-weight: 800; letter-spacing: .14em; }
+.sdg-dialog-copy h3 { margin: 5px 0 8px; font-size: 1.15rem; font-weight: 800; }
+.sdg-dialog-message { margin: 0; color: var(--text-muted); font-size: .9rem; line-height: 1.65; }
+.sdg-dialog-action { min-width: 124px; border-radius: 10px; font-weight: 700; }
+@media (max-width: 480px) { .sdg-notification-dialog { padding: 26px 20px 20px; } }
 
 /* Soft Badges */
 .bg-primary-soft { background-color: var(--primary-soft) !important; }
@@ -448,6 +611,49 @@ body {
   border: 4px solid #facc15;
 }
 
+/* Cute per-student leaderboard avatars */
+.cute-avatar {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--avatar-bg);
+  border: 3px solid #ffffff;
+  box-shadow: var(--shadow-md);
+  animation: cute-avatar-float 3s ease-in-out infinite;
+}
+
+.cute-avatar span {
+  font-size: 2.65rem;
+  line-height: 1;
+  filter: drop-shadow(0 3px 2px rgba(15, 23, 42, 0.15));
+}
+
+.cute-avatar-large {
+  width: 90px;
+  height: 90px;
+  border: 4px solid var(--avatar-accent);
+}
+
+.cute-avatar-large span { font-size: 3.4rem; }
+
+tbody .cute-avatar {
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  border-width: 2px;
+  animation-duration: 3.6s;
+}
+
+tbody .cute-avatar span { font-size: 1.35rem; }
+
+@keyframes cute-avatar-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+}
+
 .podium-rank-badge {
   position: absolute;
   bottom: -4px;
@@ -678,4 +884,241 @@ body {
   .dashboard-subnav-tabs { flex-wrap: nowrap; }
   .subnav-tab-btn { padding: 8px 12px; font-size: 0.84rem; }
   .ai-chat-window { width: calc(100vw - 32px); right: 0; }
+}
+
+/* =========================================================
+   Interactive Selection Pills (Skills & SDG Interests)
+   ========================================================= */
+.selectable-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 140px;
+  overflow-y: auto;
+  padding: 8px;
+  background: rgba(241, 245, 249, 0.6);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+}
+
+[data-theme="dark"] .selectable-pills-wrap {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: #334155;
+}
+
+.selectable-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+[data-theme="dark"] .selectable-pill {
+  background: #1e293b;
+  border-color: #475569;
+  color: #94a3b8;
+}
+
+.selectable-pill:hover {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+  background: rgba(5, 150, 105, 0.05);
+}
+
+.selectable-pill.active {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #ffffff !important;
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
+}
+
+.selectable-pill.active .pill-check-icon {
+  display: inline-block;
+}
+
+.selectable-pill .pill-check-icon {
+  display: none;
+  font-size: 0.7rem;
+}
+
+/* =========================================================
+   Password Strength Meter & Live Hint Indicator
+   ========================================================= */
+.password-meter-wrap {
+  background: rgba(248, 250, 252, 0.8);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-top: 6px;
+}
+
+[data-theme="dark"] .password-meter-wrap {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: #334155;
+}
+
+.strength-meter-bar-track {
+  height: 5px;
+  width: 100%;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+[data-theme="dark"] .strength-meter-bar-track {
+  background: #334155;
+}
+
+.strength-meter-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-level-weak { width: 25%; background-color: #ef4444; }
+.strength-level-fair { width: 50%; background-color: #f59e0b; }
+.strength-level-good { width: 75%; background-color: #0284c7; }
+.strength-level-strong { width: 100%; background-color: #10b981; }
+
+.password-hints-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+  margin-top: 6px;
+}
+
+.password-hint-rule {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.15s ease;
+}
+
+.password-hint-rule.valid {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.password-hint-rule.invalid {
+  color: #94a3b8;
+}
+
+/* =========================================================
+   Clean Empty Activities State (Waiting for AI Agent / LLM)
+   ========================================================= */
+.empty-activities-placeholder {
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.6);
+  padding: 48px 24px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .empty-activities-placeholder {
+  border-color: #334155;
+  background: rgba(30, 41, 59, 0.4);
+}
+
+.empty-activities-placeholder:hover {
+  border-color: var(--brand-primary);
+  background: rgba(5, 150, 105, 0.02);
+}
+
+.agent-pulse-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(5, 150, 105, 0.1);
+  border: 1px solid rgba(5, 150, 105, 0.25);
+  color: var(--brand-primary);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* =========================================================
+   Social Login Buttons & Auth Dividers (Google, GitHub, Facebook)
+   ========================================================= */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 18px 0;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+[data-theme="dark"] .auth-divider::before,
+[data-theme="dark"] .auth-divider::after {
+  border-color: #334155;
+}
+
+.auth-divider span {
+  padding: 0 12px;
+}
+
+.social-auth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.social-auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+[data-theme="dark"] .social-auth-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+.social-auth-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .social-auth-btn:hover {
+  background: #334155;
 }

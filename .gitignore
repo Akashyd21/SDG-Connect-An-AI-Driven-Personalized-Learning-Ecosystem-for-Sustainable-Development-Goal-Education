@@ -1,0 +1,12 @@
+backend/.env
+backend/.venv/
+backend/**/__pycache__/
+backend/.pytest_cache/
+pytest-cache-files-*/
+*.pyc
+.DS_Store
+.venv/
+_inspect/
+_inspect_ref/
+docx_work/
+~$*.docx

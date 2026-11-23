@@ -1,4 +1,4 @@
-// Quiz Engine for SDG Antigravity Web Platform
+// Quiz Engine for SDG Connect Web Platform
 // Interactive topic-based SDG quizzes with timer, instant feedback, scoring, and badge rewards
 
 class QuizEngine {
@@ -15,6 +15,13 @@ class QuizEngine {
     const quiz = window.SDG_DATA.quizzes.find(q => q.topicId === topicId);
     if (!quiz) {
       console.error("Quiz not found:", topicId);
+      return false;
+    }
+
+    const quizIndex = window.SDG_DATA.quizzes.findIndex(q => q.topicId === topicId);
+    const progress = window.appState.state.quizProgress || {};
+    if (quizIndex > 0 && !progress[topicId]?.unlocked) {
+      alert("Complete the previous quiz with at least 60% accuracy to unlock this quiz.");
       return false;
     }
 
@@ -213,10 +220,30 @@ class QuizEngine {
     const correctCount = this.userAnswers.filter(a => a.isCorrect).length;
     const percentage = Math.round((correctCount / totalQ) * 100);
     const passed = percentage >= 60;
-    const pointsAwarded = passed ? 100 : 25;
+    const quizProgress = window.appState.state.quizProgress || {};
+    const previousProgress = quizProgress[this.currentQuiz.topicId] || {};
+    const firstPass = passed && !previousProgress.completed;
+    // Score is a percentage. A first passing score contributes the same number
+    // of SDG points as activity marks; retakes update the best score only.
+    const pointsAwarded = firstPass ? percentage : 0;
+
+    quizProgress[this.currentQuiz.topicId] = {
+      ...previousProgress,
+      unlocked: true,
+      completed: previousProgress.completed || passed,
+      bestScore: Math.max(previousProgress.bestScore || 0, percentage),
+      attempts: (previousProgress.attempts || 0) + 1,
+      lastScore: percentage
+    };
+    if (passed) {
+      const currentIndex = window.SDG_DATA.quizzes.findIndex(q => q.topicId === this.currentQuiz.topicId);
+      const nextQuiz = window.SDG_DATA.quizzes[currentIndex + 1];
+      if (nextQuiz) quizProgress[nextQuiz.topicId] = { ...(quizProgress[nextQuiz.topicId] || {}), unlocked: true };
+    }
+    window.appState.state.quizProgress = quizProgress;
 
     // Credit student if passed
-    if (window.appState.state.currentUser && passed) {
+    if (window.appState.state.currentUser && firstPass) {
       const student = window.appState.state.currentUser;
       student.points = (student.points || 0) + pointsAwarded;
       if (!student.badges.includes(this.currentQuiz.badge)) {
@@ -226,6 +253,14 @@ class QuizEngine {
       student.sdgCoverage[this.currentQuiz.goalId] = (student.sdgCoverage[this.currentQuiz.goalId] || 0) + 1;
       window.appState.save();
     }
+
+    window.appState.saveQuizAttempt({
+      quizTopicId: this.currentQuiz.topicId,
+      score: percentage,
+      totalQuestions: totalQ,
+      answers: this.userAnswers,
+      pointsAwarded
+    });
 
     this.renderQuizResults(correctCount, totalQ, percentage, passed, pointsAwarded, timedOut);
   }

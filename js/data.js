@@ -1,4 +1,4 @@
-// SDG Antigravity Data Store
+// SDG Connect Data Store
 // Seed data for 17 SDGs, Quizzes, Activities, CS Deep Learning Mini-Projects, Students, and Submissions
 
 window.SDG_DATA = {
@@ -143,108 +143,8 @@ window.SDG_DATA = {
   ],
 
   // Activities, Field Actions, and CS Deep Learning Technical Projects
-  activities: [
-    {
-      id: "TASK-DL-201",
-      title: "Campus Waste Segregation YOLOv8 Deep Learning Classifier",
-      goalId: 12,
-      department: "Computer Science & Engineering / AI & ML",
-      points: 300,
-      deadline: "2026-09-30",
-      status: "Active",
-      difficulty: "Advanced",
-      taskType: "technical_dl_project",
-      aiAssigned: true,
-      matchedSkills: ["Python", "Deep Learning", "PyTorch", "Computer Vision", "YOLO"],
-      description: "Develop and train an end-to-end Computer Vision Deep Learning model (YOLOv8 / ResNet) to detect and classify campus waste items (Plastic, Organic, E-Waste, Paper) from camera frames to automate campus smart bins.",
-      verificationRules: "Complete all 4 Milestones: Dataset Curation, GitHub Repo with Model Code, Training Loss Curves (>90% accuracy), and Live Demo link.",
-      milestones: [
-        { index: 1, title: "Dataset Curation & Augmentation", weight: 25, deliverables: "Kaggle/Roboflow campus waste dataset link with at least 4 classes" },
-        { index: 2, title: "Model Architecture & Pipeline", weight: 25, deliverables: "GitHub repository with documented train.py and model architecture" },
-        { index: 3, title: "Training & Loss Curve Validation", weight: 25, deliverables: "TensorBoard/Matplotlib loss curve plot and confusion matrix (>90% accuracy)" },
-        { index: 4, title: "Live Demo & SDG Impact Report", weight: 25, deliverables: "Streamlit/Gradio live demo link and sample inference predictions" }
-      ],
-      participantsCount: 38,
-      createdBy: "AI Task Manager"
-    },
-    {
-      id: "TASK-DL-202",
-      title: "LSTM Neural Network for Solar Inverter Generation & Load Forecasting",
-      goalId: 7,
-      department: "Computer Science / EEE / AI",
-      points: 280,
-      deadline: "2026-09-25",
-      status: "Active",
-      difficulty: "Advanced",
-      taskType: "technical_dl_project",
-      aiAssigned: true,
-      matchedSkills: ["Python", "Deep Learning", "LSTM", "Time Series", "Energy Analytics"],
-      description: "Build a Long Short-Term Memory (LSTM) or Transformer time-series deep learning model to forecast rooftop solar PV power output (kW) based on weather and irradiance data.",
-      verificationRules: "Submit GitHub repo with time-series preprocessing, train/test MAE loss curves, and prediction overlay chart.",
-      milestones: [
-        { index: 1, title: "Telemetry Dataset Prep", weight: 25, deliverables: "Solar irradiance & kW telemetry time-series dataset" },
-        { index: 2, title: "LSTM / GRU Model Design", weight: 25, deliverables: "GitHub code with sliding-window sequence preprocessing" },
-        { index: 3, title: "RMSE & Loss Optimization", weight: 25, deliverables: "Training loss vs validation loss plot (RMSE < 0.15)" },
-        { index: 4, title: "Forecast Dashboard & Report", weight: 25, deliverables: "Overlay plot of Predicted vs Actual generation" }
-      ],
-      participantsCount: 24,
-      createdBy: "AI Task Manager"
-    },
-    {
-      id: "TASK-101",
-      title: "Campus Plastic-Free Audit & Segregation Drive",
-      goalId: 12,
-      department: "All Departments",
-      points: 150,
-      deadline: "2026-08-30",
-      status: "Active",
-      difficulty: "Intermediate",
-      taskType: "field_activity",
-      aiAssigned: false,
-      matchedSkills: ["Field Audit", "Data Collection", "Environmental Analysis"],
-      description: "Perform a 2-hour single-use plastic audit in the student cafeteria or hostel area. Categorize collected items into recyclables and non-recyclables, calculate estimated weekly reduction, and submit photo proof.",
-      verificationRules: "Upload photo of segregated bins with handwritten placard showing date and USN. EXIF timestamp must match submission day.",
-      milestones: [],
-      participantsCount: 42,
-      createdBy: "Dr. Sarah Johnson (Faculty Chair)"
-    },
-    {
-      id: "TASK-102",
-      title: "Rooftop Solar Efficiency & Shading Analysis",
-      goalId: 7,
-      department: "ECE / EEE / MECH",
-      points: 200,
-      deadline: "2026-09-05",
-      status: "Active",
-      difficulty: "Advanced",
-      taskType: "field_activity",
-      aiAssigned: true,
-      matchedSkills: ["IoT", "Circuit Design", "Renewable Energy"],
-      description: "Inspect the Engineering Block solar PV installation. Record generation readings from the inverter display at 10 AM, 1 PM, and 4 PM. Identify any dust accumulation or shading obstructions.",
-      verificationRules: "Clear photo of inverter readout LCD displaying kW generated with campus landmark in background.",
-      milestones: [],
-      participantsCount: 28,
-      createdBy: "Prof. Arvind Raman (Dept of EEE)"
-    },
-    {
-      id: "TASK-103",
-      title: "Native Biodiversity Census & Micro-Planting",
-      goalId: 15,
-      department: "All Departments",
-      points: 120,
-      deadline: "2026-08-28",
-      status: "Active",
-      difficulty: "Beginner",
-      taskType: "field_activity",
-      aiAssigned: false,
-      matchedSkills: ["Botany", "Photography", "Ecosystem Tracking"],
-      description: "Plant 2 native saplings in the designated campus green corridor or take geo-tagged photos of 5 native flora/fauna species on campus.",
-      verificationRules: "Geo-tagged photo of sapling planting with student ID card next to sapling.",
-      milestones: [],
-      participantsCount: 65,
-      createdBy: "Dr. Sarah Johnson (Faculty Chair)"
-    }
-  ],
+  // Initially blank so LLM / Autonomous AI Agent or Faculty dynamically populates tasks
+  activities: [],
 
   // Quizzes
   quizzes: [
@@ -349,149 +249,51 @@ window.SDG_DATA = {
           explanation: "A circular economy aims to design out waste and pollution, keep products in use, and regenerate natural systems."
         }
       ]
+    },
+    {
+      topicId: "water-6", goalId: 6, title: "SDG 6: Water Systems & Resilience Challenge", badge: "Water Systems Analyst", icon: "fa-solid fa-droplet", color: "#26BDE2", difficulty: "Advanced", timeLimitSeconds: 180,
+      questions: [
+        { id: "q1", question: "A campus reports lower water use but unchanged groundwater stress. What is most plausible?", options: ["Use shifted to an unmetered borewell or external supply", "Rainfall automatically replenished all aquifers", "Lower use always proves lower water stress", "Groundwater stress is unrelated to withdrawals"], correctIndex: 0, explanation: "Metered reductions can hide leakage, unmetered abstraction, or a change in supply source." },
+        { id: "q2", question: "Which intervention follows the strongest water-sensitive hierarchy?", options: ["Reduce demand, repair losses, reuse treated water, then add supply", "Build tanks before measuring demand", "Treat all wastewater as potable immediately", "Increase pumping to guarantee availability"], correctIndex: 0, explanation: "Demand reduction and loss control should precede reuse and new supply." },
+        { id: "q3", question: "Which metric best evaluates a campus rainwater program?", options: ["Verified potable-water displacement normalized for rainfall and demand", "Number of tanks installed", "Total rainfall alone", "Project budget"], correctIndex: 0, explanation: "The useful outcome is reliable, normalized displacement of potable demand." }
+      ]
+    },
+    {
+      topicId: "cities-11", goalId: 11, title: "SDG 11: Sustainable Campus & Urban Design", badge: "Resilient Campus Planner", icon: "fa-solid fa-city", color: "#FD9D24", difficulty: "Advanced", timeLimitSeconds: 180,
+      questions: [
+        { id: "q1", question: "A cycle lane has high usage but pedestrian injuries rise nearby. What should be investigated first?", options: ["Intersection design, crossing priority, speed, and conflict points", "Remove all cycling infrastructure", "Count bicycle trips only", "Assume users are violating rules"], correctIndex: 0, explanation: "Safety depends on conflict geometry, speeds, sightlines, and priority rules." },
+        { id: "q2", question: "Which approach best reduces heat exposure for vulnerable campus users?", options: ["Combine shade, cool surfaces, water, route access, and heat alerts", "Install one decorative tree", "Measure only daily maximum temperature", "Move all activities indoors"], correctIndex: 0, explanation: "Heat resilience requires layered protection and access for vulnerable groups." },
+        { id: "q3", question: "What evidence best supports a claim that public-space investment improved inclusion?", options: ["Before/after usage and safety data disaggregated by users and accessibility needs", "One positive testimonial", "Construction cost", "Staff aesthetic ratings"], correctIndex: 0, explanation: "Inclusion claims need comparable outcome evidence across groups and time." }
+      ]
+    },
+    {
+      topicId: "industry-9", goalId: 9, title: "SDG 9: Innovation, Infrastructure & Responsible AI", badge: "Responsible Innovation Engineer", icon: "fa-solid fa-microchip", color: "#FD6925", difficulty: "Advanced", timeLimitSeconds: 180,
+      questions: [
+        { id: "q1", question: "A model has 98% accuracy on imbalanced data but fails the minority class. Which metric matters most?", options: ["Per-class recall/precision or macro-F1", "Accuracy alone", "Training time", "Parameter count"], correctIndex: 0, explanation: "Macro metrics prevent a dominant class from hiding minority-class failure." },
+        { id: "q2", question: "What is the strongest control against data leakage?", options: ["Split by time or entity before feature engineering and fit transforms only on training data", "Increase epochs", "Use a larger test set after tuning", "Duplicate rare samples across all splits"], correctIndex: 0, explanation: "Evaluation boundaries must be respected during splitting and preprocessing." },
+        { id: "q3", question: "Which design best supports a maintainable campus IoT deployment?", options: ["Documented interfaces, device identity, monitoring, failure modes, and staged rollout", "One deployment with no rollback", "Hard-coded credentials", "Collect every signal without a purpose"], correctIndex: 0, explanation: "Reliable infrastructure needs identity, observability, security, and reversibility." }
+      ]
+    },
+    {
+      topicId: "biodiversity-15", goalId: 15, title: "SDG 15: Biodiversity, Soil & Ecosystem Evidence", badge: "Ecosystem Evidence Keeper", icon: "fa-solid fa-seedling", color: "#56C02B", difficulty: "Advanced", timeLimitSeconds: 180,
+      questions: [
+        { id: "q1", question: "Why is species richness alone insufficient to assess biodiversity recovery?", options: ["It ignores abundance, composition, functional roles, and native versus invasive gains", "Richness always equals health", "Richness measures soil carbon", "Only mammals affect biodiversity"], correctIndex: 0, explanation: "Multiple indicators are needed to distinguish healthy recovery from simple species counts." },
+        { id: "q2", question: "Which sampling design gives stronger evidence for a habitat intervention?", options: ["Repeated standardized sampling with comparable control and intervention areas", "One survey after planting", "Only the most attractive area", "Changing methods every visit"], correctIndex: 0, explanation: "Controls and repeated comparable sampling help separate intervention effects from seasonal variation." },
+        { id: "q3", question: "A soil amendment increases plant growth but reduces microbial diversity. What is the best conclusion?", options: ["Evaluate the trade-off over time with multiple ecosystem indicators before scaling", "The intervention is automatically successful", "Plant height proves soil recovery", "Microbial diversity is irrelevant"], correctIndex: 0, explanation: "Short-term productivity can conflict with longer-term ecosystem function." }
+      ]
+    },
+    {
+      topicId: "education-4", goalId: 4, title: "SDG 4: Education Equity & Learning Impact", badge: "Learning Impact Strategist", icon: "fa-solid fa-graduation-cap", color: "#C5192D", difficulty: "Advanced", timeLimitSeconds: 180,
+      questions: [
+        { id: "q1", question: "A course has high completion but large achievement gaps. What is the strongest conclusion?", options: ["Completion hides unequal outcomes; disaggregated learning evidence is required", "The course is equitable", "The gap is only motivation", "More exams automatically remove the gap"], correctIndex: 0, explanation: "Equity requires examining outcomes, support access, and barriers across groups." },
+        { id: "q2", question: "Which design best tests whether peer mentoring improved learning?", options: ["Compare baseline and follow-up outcomes with a suitable comparison group", "Count mentor meetings", "Ask mentors if it worked", "Measure attendance once"], correctIndex: 0, explanation: "A comparison design provides stronger evidence than activity counts or opinions." },
+        { id: "q3", question: "What best demonstrates meaningful learning transfer?", options: ["Students apply concepts to a new real-world problem and explain their reasoning", "Students memorize more definitions", "Students spend more time online", "Students receive more notifications"], correctIndex: 0, explanation: "Applying knowledge in an unfamiliar context demonstrates deeper learning." }
+      ]
     }
   ],
 
-  // Seed Students
-  students: [
-    {
-      id: "STU-001",
-      name: "Akash Sharma",
-      usn: "1RV22CS045",
-      department: "Computer Science & Engineering",
-      email: "akash.cs22@campus.edu",
-      phone: "+91 98765 43210",
-      skills: ["Python", "Deep Learning", "PyTorch", "Computer Vision", "IoT Sensor Data"],
-      interests: ["Clean Energy (SDG 7)", "Climate Action (SDG 13)", "Responsible Consumption (SDG 12)"],
-      points: 1240,
-      tasksCompletedCount: 14,
-      ongoingTasksCount: 2,
-      avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80",
-      sdgCoverage: { 7: 4, 13: 5, 12: 3, 6: 1, 4: 1 },
-      badges: ["Climate Sentinel", "Clean Spark Pioneer", "Deep Learning Changemaker", "Zero-Waste Hero"]
-    },
-    {
-      id: "STU-002",
-      name: "Ananya Deshmukh",
-      usn: "1RV22AI012",
-      department: "Artificial Intelligence & ML",
-      email: "ananya.ai22@campus.edu",
-      phone: "+91 98450 11223",
-      skills: ["Computer Vision", "Neural Networks", "Data Visualization", "YOLO"],
-      interests: ["Quality Education (SDG 4)", "Gender Equality (SDG 5)", "Climate Action (SDG 13)"],
-      points: 1180,
-      tasksCompletedCount: 13,
-      ongoingTasksCount: 1,
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
-      sdgCoverage: { 4: 6, 5: 3, 13: 3, 9: 1 },
-      badges: ["STEM Mentor", "Eco Innovator", "Equity Ambassador"]
-    },
-    {
-      id: "STU-003",
-      name: "Rohan Varma",
-      usn: "1RV22ME088",
-      department: "Mechanical Engineering",
-      email: "rohan.me22@campus.edu",
-      phone: "+91 91234 56789",
-      skills: ["3D CAD", "Renewable Energy Systems", "Thermodynamics"],
-      interests: ["Affordable and Clean Energy (SDG 7)", "Sustainable Cities (SDG 11)"],
-      points: 1050,
-      tasksCompletedCount: 11,
-      ongoingTasksCount: 2,
-      avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80",
-      sdgCoverage: { 7: 6, 11: 3, 12: 2 },
-      badges: ["Solar Tech Lead", "Urban Planner"]
-    }
-  ],
-
-  // Faculty Accounts
-  faculty: [
-    {
-      id: "FAC-101",
-      name: "Dr. Sarah Johnson",
-      department: "Environmental Engineering",
-      email: "sarah.johnson@campus.edu",
-      phone: "+91 98800 12345",
-      designation: "Associate Professor & Sustainability Chair",
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80"
-    },
-    {
-      id: "FAC-102",
-      name: "Dr. Deepa Nair",
-      department: "Computer Science & Engineering",
-      email: "deepa.nair@campus.edu",
-      phone: "+91 98800 67890",
-      designation: "Professor & Head of AI Research",
-      avatar: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=150&auto=format&fit=crop&q=80"
-    }
-  ],
-
-  // Submissions including Technical Deep Learning Milestone deliverables
-  submissions: [
-    {
-      id: "SUB-DL-901",
-      taskId: "TASK-DL-201",
-      taskTitle: "Campus Waste Segregation YOLOv8 Deep Learning Classifier",
-      sdgGoalId: 12,
-      studentId: "STU-001",
-      studentName: "Akash Sharma",
-      usn: "1RV22CS045",
-      department: "Computer Science & Engineering",
-      taskType: "technical_dl_project",
-      milestoneIndex: 3,
-      submittedAt: "2026-08-15 11:30:00",
-      impactSummary: "Completed Milestone 3: Model training and validation. Trained YOLOv8m on 1,850 augmented campus waste images over 50 epochs. Achieved 93.4% mAP@0.5 and 0.91 F1-Score.",
-      githubRepoUrl: "https://github.com/akash-sharma/campus-waste-yolov8",
-      colabNotebookUrl: "https://colab.research.google.com/drive/sample-sdg12-waste-classifier",
-      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80",
-      trainingLossPlotUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80",
-      modelMetricsSummary: {
-        architecture: "YOLOv8m Transfer Learning",
-        mAP: "93.4%",
-        f1Score: "0.91",
-        epochsTrained: 50,
-        classes: ["PET Plastic", "Organic Food Waste", "E-Waste Batteries", "Paper/Cardboard"]
-      },
-      liveDemoUrl: "https://huggingface.co/spaces/campus-waste-vision",
-      verification: {
-        status: "Needs Review", // Pending faculty review
-        aiConfidence: 94,
-        duplicateHashMatch: false,
-        metadataIntegrity: "Passed (GitHub repository public and contains valid train.py & dataset.yaml)",
-        detectedObjects: ["training loss curve", "confusion matrix", "bounding box inference"],
-        aiExplanation: "AI Code Analysis: Genuine PyTorch/YOLO implementation with converging validation loss (mAP 93.4%). Ready for faculty technical evaluation.",
-        reviewedBy: "Pending Faculty Technical Review",
-        reviewTimestamp: null,
-        facultyFeedback: ""
-      },
-      pointsAwarded: 0
-    },
-    {
-      id: "SUB-801",
-      taskId: "TASK-101",
-      taskTitle: "Campus Plastic-Free Audit & Segregation Drive",
-      sdgGoalId: 12,
-      studentId: "STU-001",
-      studentName: "Akash Sharma",
-      usn: "1RV22CS045",
-      department: "Computer Science & Engineering",
-      taskType: "field_activity",
-      submittedAt: "2026-08-14 14:35:10",
-      impactSummary: "Audited Central Canteen waste bins. Separated 4.8 kg of single-use PET bottles and directed them to the mechanical shredder unit.",
-      location: "Campus Central Canteen Hub",
-      imageUrl: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&auto=format&fit=crop&q=80",
-      verification: {
-        status: "Verified",
-        aiConfidence: 94,
-        duplicateHashMatch: false,
-        metadataIntegrity: "Passed (EXIF matches device & campus geo-fence)",
-        detectedObjects: ["recycling bin", "plastic bottles", "waste audit placard"],
-        aiExplanation: "Neural image classifier identified correct sorting bins and legible verification placard.",
-        reviewedBy: "AI Auto-Validator",
-        reviewTimestamp: "2026-08-14 14:35:15",
-        facultyFeedback: "Automated instant verification approved."
-      },
-      pointsAwarded: 150
-    }
-  ]
+  // User information initially blank - populated dynamically via registration, social login, or backend DB
+  students: [],
+  faculty: [],
+  submissions: []
 };

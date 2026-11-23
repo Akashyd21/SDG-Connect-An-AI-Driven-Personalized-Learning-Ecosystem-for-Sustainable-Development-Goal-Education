@@ -1,4 +1,4 @@
-// AI Mentor Chatbot for SDG Antigravity Web Platform
+// AI Mentor Chatbot for SDG Connect Web Platform
 // Persistent animated floating bot, step-by-step guidance, and Deep Learning technical mentoring
 
 class SdgChatbot {
@@ -44,7 +44,7 @@ class SdgChatbot {
             <div>
               <h6 class="mb-0 fw-bold">SustainAI Mentor</h6>
               <small class="text-success d-flex align-items-center gap-1">
-                <span class="online-dot"></span> Intelligent SDG & DL Guide
+              <span class="online-dot"></span> Simple SDG Platform Guide
               </small>
             </div>
           </div>
@@ -65,11 +65,10 @@ class SdgChatbot {
 
         <!-- Quick Prompt Suggestions -->
         <div class="ai-quick-prompts p-2 border-top bg-light-subtle d-flex gap-1 overflow-x-auto" id="ai-quick-prompts">
-          <button class="quick-chip-btn" data-action="dl-milestones">🔬 DL Milestones</button>
-          <button class="quick-chip-btn" data-action="assign-task">📋 Assign Me a Task</button>
-          <button class="quick-chip-btn" data-action="recommend-task">🌱 Recommend Tasks</button>
-          <button class="quick-chip-btn" data-action="explain-verification">🔍 Verification Info</button>
-          <button class="quick-chip-btn" data-action="dl-tips">💡 PyTorch / DL Tips</button>
+          <button class="quick-chip-btn" data-action="platform-help">How SDG Connect works</button>
+          <button class="quick-chip-btn" data-action="course-help">Why SDG courses matter</button>
+          <button class="quick-chip-btn" data-action="project-help">Explain my assigned project</button>
+          <button class="quick-chip-btn" data-action="submission-help">How do I submit?</button>
         </div>
 
         <!-- Chat Input Form -->
@@ -86,24 +85,24 @@ class SdgChatbot {
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content card-glass">
             <div class="modal-header border-bottom">
-              <h5 class="modal-title fw-bold"><i class="fa-solid fa-shield-halved text-primary me-2"></i> Responsible AI & Technical Verification</h5>
+              <h5 class="modal-title fw-bold"><i class="fa-solid fa-circle-info text-primary me-2"></i> About the SDG Connect Mentor</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body text-dark">
-              <p class="small text-muted mb-3">Our platform implements ethical, privacy-preserving, and human-in-the-loop AI across all recommendations and verifications.</p>
+              <p class="small text-muted mb-3">The mentor explains the platform, SDG learning, assigned projects, enrollment, and submissions. Faculty approval remains part of the activity workflow.</p>
               
               <div class="d-flex flex-column gap-2">
                 <div class="p-2 rounded bg-light border">
-                  <strong>🎯 CS & Deep Learning Task Matching:</strong>
-                  <p class="small text-muted mb-0">Detects programming skills (Python, PyTorch, YOLO, Computer Vision) and matches students to structured 4-milestone technical SDG challenges.</p>
+                  <strong>🎯 Personalized activities:</strong>
+                  <p class="small text-muted mb-0">Recommendations use your department, skills, interests, SDG preferences, skill level, and available time.</p>
                 </div>
                 <div class="p-2 rounded bg-light border">
-                  <strong>🔬 Code & Artifact Verification:</strong>
-                  <p class="small text-muted mb-0">Analyzes GitHub repos, checks training loss curve convergence, and prepares automated code summaries for Faculty evaluation.</p>
+                  <strong>📚 SDG learning support:</strong>
+                  <p class="small text-muted mb-0">Ask how an assigned project supports an SDG course, what it means, and what steps or resources can help you complete it.</p>
                 </div>
                 <div class="p-2 rounded bg-light border">
-                  <strong>🔒 Privacy & Data Sovereignty:</strong>
-                  <p class="small text-muted mb-0">Student biometric identifiers are never stored. Image metadata is scrubbed after institutional auditing.</p>
+                  <strong>👩‍🏫 Faculty workflow:</strong>
+                  <p class="small text-muted mb-0">AI-generated activities wait for faculty approval before enrollment, and submissions are sent to faculty for review.</p>
                 </div>
               </div>
             </div>
@@ -169,16 +168,14 @@ class SdgChatbot {
         const btn = e.target.closest(".quick-chip-btn");
         if (!btn) return;
         const action = btn.getAttribute("data-action");
-        if (action === "dl-milestones") {
-          this.handleUserQuery("How do I complete my Deep Learning project milestones?");
-        } else if (action === "assign-task") {
-          this.handleUserQuery("Assign me a task right now");
-        } else if (action === "recommend-task") {
-          this.handleUserQuery("Recommend high impact SDG tasks for my profile");
-        } else if (action === "explain-verification") {
-          this.handleUserQuery("How does AI proof & code verification work?");
-        } else if (action === "dl-tips") {
-          this.handleUserQuery("Give me PyTorch deep learning tips for SDG projects");
+        if (action === "platform-help") {
+          this.handleUserQuery("How does SDG Connect work?");
+        } else if (action === "course-help") {
+          this.handleUserQuery("Why are SDG courses important for students?");
+        } else if (action === "project-help") {
+          this.handleUserQuery("How is my assigned project connected to the SDG course?");
+        } else if (action === "submission-help") {
+          this.handleUserQuery("What information do I need to submit for my assigned project?");
         }
       });
     }
@@ -240,10 +237,49 @@ class SdgChatbot {
 
     this.showTypingIndicator();
 
-    setTimeout(() => {
+    this.requestAiResponse(query);
+  }
+
+  async requestAiResponse(query) {
+    const student = window.appState.state.currentUser || window.appState.state.students[0] || {};
+    const config = window.SDG_SUPABASE_CONFIG || {};
+    const history = (window.appState.state.chatHistory || []).slice(-12);
+
+    try {
+      const response = await fetch(`${config.apiBaseUrl || "http://127.0.0.1:8000"}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: query,
+          student: {
+            name: student.name,
+            department: student.department,
+            skills: student.skills || [],
+            interests: student.interests || [],
+            ongoingTasks: window.appState.state.studentOngoingTasks || []
+          },
+          history
+        })
+      });
+
+      if (!response.ok) throw new Error("Chat service unavailable");
+      const data = await response.json();
       this.hideTypingIndicator();
-      this.generateAiResponse(query.toLowerCase());
-    }, 750);
+      window.appState.addChatMessage({
+        sender: "ai",
+        text: data.reply,
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      });
+      this.renderMessages();
+    } catch (error) {
+      this.hideTypingIndicator();
+      window.appState.addChatMessage({
+        sender: "ai",
+        text: "The live AI mentor is unavailable right now. Check that the FastAPI server is running and the LLM account has available credits.",
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      });
+      this.renderMessages();
+    }
   }
 
   showTypingIndicator() {
@@ -273,13 +309,11 @@ class SdgChatbot {
     let responseText = "";
     let actionButton = null;
 
-    if (query.includes("milestone") || query.includes("deep learning") || query.includes("dl")) {
-      responseText = `🔬 **Deep Learning 4-Stage Milestone Roadmap:**\n\n1. **Milestone 1 (25% - Dataset)**: Upload Kaggle/Roboflow link with 4+ classes.\n2. **Milestone 2 (50% - Model Code)**: Provide public GitHub repo with documented \`train.py\` & model architecture.\n3. **Milestone 3 (75% - Training Curves)**: Upload Loss/Accuracy plot showing convergence and >90% accuracy.\n4. **Milestone 4 (100% - Demo & Report)**: Submit live Streamlit/Gradio demo URL and impact brief for faculty approval (+300 pts)!`;
-    } else if (query.includes("assign") || query.includes("give me a task")) {
+    if (query.includes("assign") || query.includes("give me a task")) {
       const dynamicTask = window.sdgAiEngine.generateDynamicTaskForStudent(student);
       window.appState.state.activities.unshift(dynamicTask);
       
-      responseText = `✨ **Autonomous AI Task Assigned!**\n\n**${dynamicTask.title}**\n• **Goal**: SDG ${dynamicTask.goalId}\n• **Type**: ${dynamicTask.taskType === 'technical_dl_project' ? 'Technical Deep Learning Project (4 Milestones)' : 'Field Activity'}\n• **Reward**: +${dynamicTask.points} Points\n• **Brief**: ${dynamicTask.description}\n\nWould you like to enroll and add this to your Ongoing Tasks?`;
+      responseText = `✨ **Personalized SDG Activity Assigned!**\n\n**${dynamicTask.title}**\n• **Goal**: SDG ${dynamicTask.goalId}\n• **Type**: ${dynamicTask.taskType === 'technical_dl_project' ? 'Project Activity' : 'Field Activity'}\n• **Reward**: +${dynamicTask.points} Points\n• **Brief**: ${dynamicTask.description}\n\nWould you like to enroll and add this to your Activities?`;
       actionButton = {
         label: `Accept & Start ${dynamicTask.id}`,
         taskId: dynamicTask.id
@@ -288,16 +322,14 @@ class SdgChatbot {
       const recommendations = window.sdgAiEngine.getRecommendedTasks(student, 2);
       if (recommendations.length > 0) {
         const top = recommendations[0];
-        responseText = `🎯 **Personalized Recommendation** (${top.matchScore}% Match for you):\n\n**${top.title}** (SDG ${top.goalId})\n• **Why**: ${top.matchReasons.join("; ")}\n• **Reward**: +${top.points} pts\n• **Type**: ${top.taskType === 'technical_dl_project' ? 'Deep Learning Mini-Project' : 'Field Action'}`;
+        responseText = `🎯 **Personalized Recommendation** (${top.matchScore}% Match for you):\n\n**${top.title}** (SDG ${top.goalId})\n• **Why**: ${top.matchReasons.join("; ")}\n• **Reward**: +${top.points} pts\n• **Type**: ${top.taskType === 'technical_dl_project' ? 'Technical Project' : 'Field Action'}`;
         actionButton = {
           label: `Start Task: ${top.id}`,
           taskId: top.id
         };
       }
-    } else if (query.includes("pytorch") || query.includes("tip")) {
-      responseText = `💡 **PyTorch Deep Learning Best Practices for SDG Projects:**\n\n• **Data Augmentation**: Use \`torchvision.transforms\` (RandomHorizontalFlip, ColorJitter) to prevent overfitting on campus photos.\n• **Transfer Learning**: Freeze backbone weights (\`requires_grad=False\`) and fine-tune only final classification heads for faster convergence.\n• **Logging**: Log loss and accuracy using \`torch.utils.tensorboard\` or \`matplotlib\` for your Milestone 3 submission!`;
     } else {
-      responseText = `I'm your **Autonomous SDG & Deep Learning AI Mentor**. I can:\n• **Track your 4-stage Deep Learning project milestones**\n• **Assign personalized technical tasks** tailored to your programming skills\n• Guide you on **PyTorch, YOLO, and loss curve verification**\n• Assist with **evidence submissions**.\n\nTry asking: *"Check DL project milestones"* or *"Assign me a task"*!`;
+      responseText = `I'm your **SDG Connect Mentor**. I can explain how the platform works, why SDG courses matter, how your assigned project supports an SDG, how to enroll, and what to include in your submission. Ask me about your department, activity, SDG course, project description, or submission.`;
     }
 
     window.appState.addChatMessage({
@@ -316,7 +348,7 @@ class SdgChatbot {
     if (success) {
       window.appState.addChatMessage({
         sender: "ai",
-        text: `🎉 **Success! Task ${taskId} has been assigned to your Ongoing Tasks list!**\n\nYou can track milestones and submit deliverables in your **My Progress** or **Activities** dashboard.`,
+        text: `🎉 **Success! Task ${taskId} has been assigned to your Activities list!**\n\nYou can open the activity information, enroll, and submit the required project information from your dashboard.`,
         timestamp: timestamp
       });
       if (window.appState.state.currentRoute === "student-dashboard") {

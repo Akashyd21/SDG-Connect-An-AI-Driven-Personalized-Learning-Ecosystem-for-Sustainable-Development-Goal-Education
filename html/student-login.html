@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Portal — Sign In & Registration | SDG Antigravity</title>
+  <title>Student Portal — Sign In & Registration | SDG Connect</title>
 
   <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,7 +26,7 @@
         <div class="brand-logo-icon">
           <i class="fa-solid fa-earth-americas"></i>
         </div>
-        <span class="brand-logo-text">SDG <span class="text-success">Antigravity</span></span>
+        <span class="brand-logo-text">SDG <span class="text-success">Connect</span></span>
       </a>
       <div class="d-flex gap-2">
         <a href="index.html" class="btn btn-sm btn-outline-secondary">
@@ -45,7 +45,27 @@
           <i class="fa-solid fa-user-graduate"></i>
         </div>
         <h3 class="fw-bold mb-1">Student Portal</h3>
-        <p class="text-muted small">Sign in or register to receive tailored AI SDG tasks & Deep Learning milestones</p>
+        <p class="text-muted small">Sign in or register to receive tailored AI SDG activities and project guidance</p>
+      </div>
+
+      <!-- Social Sign In Options (Google, GitHub, Facebook) -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted d-block text-center mb-2">1-Click Fast Access</label>
+        <div class="social-auth-grid">
+          <button type="button" class="social-auth-btn btn-social-student" data-provider="google" title="Sign In with Google">
+            <i class="fa-brands fa-google text-danger"></i> Google
+          </button>
+          <button type="button" class="social-auth-btn btn-social-student" data-provider="github" title="Sign In with GitHub">
+            <i class="fa-brands fa-github text-dark"></i> GitHub
+          </button>
+          <button type="button" class="social-auth-btn btn-social-student" data-provider="facebook" title="Sign In with Facebook">
+            <i class="fa-brands fa-facebook text-primary"></i> Facebook
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-divider">
+        <span>or with institutional credentials</span>
       </div>
 
       <!-- Auth Switch Tabs -->
@@ -61,7 +81,7 @@
             <label class="form-label small fw-bold">USN or University Email</label>
             <div class="input-group">
               <span class="input-group-text bg-light"><i class="fa-solid fa-id-card text-muted"></i></span>
-              <input type="text" id="student-login-usn" class="form-control" placeholder="e.g. 1RV22CS045" value="1RV22CS045" required />
+              <input type="text" id="student-login-usn" class="form-control" placeholder="Enter USN or Email (e.g. 1RV24CS010)" required />
             </div>
           </div>
 
@@ -72,7 +92,10 @@
             </div>
             <div class="input-group mt-1">
               <span class="input-group-text bg-light"><i class="fa-solid fa-lock text-muted"></i></span>
-              <input type="password" id="student-login-pass" class="form-control" placeholder="••••••••" value="password123" required />
+              <input type="password" id="student-login-pass" class="form-control" placeholder="Enter password" required />
+              <button class="btn btn-outline-secondary" type="button" id="btn-toggle-login-pass" title="Show/Hide Password">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
 
@@ -88,23 +111,23 @@
             <input type="text" id="student-login-captcha" class="form-control form-control-sm" placeholder="Enter characters shown above" required />
           </div>
 
-          <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
-            <i class="fa-solid fa-arrow-right-to-bracket me-2"></i> Sign In to Student Dashboard
+          <button type="submit" class="btn btn-success w-100 py-2 fw-bold">
+            <i class="fa-solid fa-arrow-right-to-bracket me-2"></i> Sign In to Student Portal
           </button>
         </form>
       </div>
 
-      <!-- Student Sign Up Form (All 9 Requested Fields) -->
+      <!-- Student Sign Up Form -->
       <div id="student-form-signup-box" class="d-none">
         <form id="form-student-signup">
           <div class="row g-2 mb-2">
             <div class="col-md-6">
               <label class="form-label small fw-bold">Student Name</label>
-              <input type="text" id="student-signup-name" class="form-control form-control-sm" placeholder="e.g. Akash Sharma" required />
+              <input type="text" id="student-signup-name" class="form-control form-control-sm" placeholder="Enter your full name" required />
             </div>
             <div class="col-md-6">
               <label class="form-label small fw-bold">University Serial No (USN)</label>
-              <input type="text" id="student-signup-usn" class="form-control form-control-sm" placeholder="e.g. 1RV22CS045" required />
+              <input type="text" id="student-signup-usn" class="form-control form-control-sm" placeholder="e.g. 1RV24CS045" required />
             </div>
           </div>
 
@@ -114,9 +137,10 @@
               <select id="student-signup-dept" class="form-select form-select-sm" required>
                 <option value="Computer Science & Engineering">Computer Science & Engineering</option>
                 <option value="Artificial Intelligence & ML">Artificial Intelligence & ML</option>
+                <option value="Electronics & Communication Eng">Electronics & Communication Eng</option>
                 <option value="Electrical & Electronics Eng">Electrical & Electronics Eng</option>
                 <option value="Mechanical Engineering">Mechanical Engineering</option>
-                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Civil & Environmental Eng">Civil & Environmental Eng</option>
                 <option value="Information Science & Eng">Information Science & Eng</option>
               </select>
             </div>
@@ -126,25 +150,117 @@
             </div>
           </div>
 
-          <div class="mb-2">
+          <div class="mb-3">
             <label class="form-label small fw-bold">Institutional Email</label>
-            <input type="email" id="student-signup-email" class="form-control form-control-sm" placeholder="akash@campus.edu" required />
+              <input type="email" id="student-signup-email" class="form-control form-control-sm" placeholder="student@university.edu" required />
           </div>
 
-          <div class="row g-2 mb-2">
+          <div class="row g-2 mb-3">
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Skills</label>
-              <input type="text" id="student-signup-skills" class="form-control form-control-sm" placeholder="e.g. Python, PyTorch, Deep Learning, IoT" />
+              <label class="form-label small fw-bold">Skill Level</label>
+              <select id="student-signup-skill-level" class="form-select form-select-sm" required>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate" selected>Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Interests (SDG Focus)</label>
-              <input type="text" id="student-signup-interests" class="form-control form-control-sm" placeholder="e.g. Responsible Consumption (SDG 12), Clean Energy" />
+              <label class="form-label small fw-bold">Available Hours</label>
+              <input type="number" id="student-signup-hours" class="form-control form-control-sm" min="1" max="40" step="0.5" value="4" required />
             </div>
           </div>
 
-          <div class="mb-2">
-            <label class="form-label small fw-bold">Password</label>
-            <input type="password" id="student-signup-pass" class="form-control form-control-sm" placeholder="Minimum 6 characters" required />
+          <!-- Interactive Skills Choices -->
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="form-label small fw-bold mb-0">
+                <i class="fa-solid fa-laptop-code text-primary me-1"></i> Choose Your Technical Skills
+              </label>
+              <span class="badge bg-primary-soft text-primary small" id="skills-selected-count">2 Selected</span>
+            </div>
+            <p class="text-muted" style="font-size: 0.73rem; margin-bottom: 6px;">
+              Click pills to toggle your skills. The AI Agent uses these to match suitable tasks:
+            </p>
+            <div class="selectable-pills-wrap mb-2" id="skills-pill-container">
+              <!-- Dynamically populated or static pills -->
+              <span class="selectable-pill active" data-skill="Python"><i class="fa-solid fa-check pill-check-icon"></i> Python</span>
+              <span class="selectable-pill active" data-skill="Deep Learning"><i class="fa-solid fa-check pill-check-icon"></i> Deep Learning</span>
+              <span class="selectable-pill" data-skill="PyTorch"><i class="fa-solid fa-check pill-check-icon"></i> PyTorch</span>
+              <span class="selectable-pill" data-skill="Computer Vision"><i class="fa-solid fa-check pill-check-icon"></i> Computer Vision</span>
+              <span class="selectable-pill" data-skill="Time Series / LSTM"><i class="fa-solid fa-check pill-check-icon"></i> Time Series / LSTM</span>
+              <span class="selectable-pill" data-skill="IoT & Sensors"><i class="fa-solid fa-check pill-check-icon"></i> IoT & Sensors</span>
+              <span class="selectable-pill" data-skill="Renewable Energy"><i class="fa-solid fa-check pill-check-icon"></i> Renewable Energy</span>
+              <span class="selectable-pill" data-skill="Solar PV Analysis"><i class="fa-solid fa-check pill-check-icon"></i> Solar PV Analysis</span>
+              <span class="selectable-pill" data-skill="Field Auditing"><i class="fa-solid fa-check pill-check-icon"></i> Field Auditing</span>
+              <span class="selectable-pill" data-skill="CAD / Simulation"><i class="fa-solid fa-check pill-check-icon"></i> CAD / Simulation</span>
+              <span class="selectable-pill" data-skill="Water Quality Testing"><i class="fa-solid fa-check pill-check-icon"></i> Water Quality Testing</span>
+              <span class="selectable-pill" data-skill="GIS & Mapping"><i class="fa-solid fa-check pill-check-icon"></i> GIS & Mapping</span>
+              <span class="selectable-pill" data-skill="Data Analytics"><i class="fa-solid fa-check pill-check-icon"></i> Data Analytics</span>
+              <span class="selectable-pill" data-skill="Waste Management"><i class="fa-solid fa-check pill-check-icon"></i> Waste Management</span>
+            </div>
+            <div class="input-group input-group-sm">
+              <input type="text" id="custom-skill-input" class="form-control" placeholder="Or type a custom skill..." />
+              <button class="btn btn-outline-primary" type="button" id="btn-add-custom-skill">
+                <i class="fa-solid fa-plus me-1"></i> Add Skill
+              </button>
+            </div>
+            <input type="hidden" id="student-signup-skills" value="Python, Deep Learning" />
+          </div>
+
+          <!-- Interactive Interests (SDG Focus) Choices -->
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="form-label small fw-bold mb-0">
+                <i class="fa-solid fa-earth-americas text-success me-1"></i> Choose Your SDG Focus & Interests
+              </label>
+              <span class="badge bg-success-soft text-success small" id="interests-selected-count">1 Selected</span>
+            </div>
+            <p class="text-muted" style="font-size: 0.73rem; margin-bottom: 6px;">
+              Select the UN Sustainable Development Goals you want to focus on:
+            </p>
+            <div class="selectable-pills-wrap mb-2" id="interests-pill-container">
+              <span class="selectable-pill active" data-interest="SDG 12: Responsible Consumption"><i class="fa-solid fa-check pill-check-icon"></i> SDG 12: Responsible Consumption</span>
+              <span class="selectable-pill" data-interest="SDG 7: Affordable & Clean Energy"><i class="fa-solid fa-check pill-check-icon"></i> SDG 7: Clean Energy</span>
+              <span class="selectable-pill" data-interest="SDG 13: Climate Action"><i class="fa-solid fa-check pill-check-icon"></i> SDG 13: Climate Action</span>
+              <span class="selectable-pill" data-interest="SDG 6: Clean Water & Sanitation"><i class="fa-solid fa-check pill-check-icon"></i> SDG 6: Clean Water</span>
+              <span class="selectable-pill" data-interest="SDG 15: Life on Land"><i class="fa-solid fa-check pill-check-icon"></i> SDG 15: Life on Land</span>
+              <span class="selectable-pill" data-interest="SDG 9: Industry & Innovation"><i class="fa-solid fa-check pill-check-icon"></i> SDG 9: Innovation</span>
+              <span class="selectable-pill" data-interest="SDG 11: Sustainable Cities"><i class="fa-solid fa-check pill-check-icon"></i> SDG 11: Sustainable Cities</span>
+              <span class="selectable-pill" data-interest="SDG 4: Quality Education"><i class="fa-solid fa-check pill-check-icon"></i> SDG 4: Quality Education</span>
+              <span class="selectable-pill" data-interest="SDG 3: Good Health & Well-being"><i class="fa-solid fa-check pill-check-icon"></i> SDG 3: Good Health</span>
+              <span class="selectable-pill" data-interest="SDG 2: Zero Hunger"><i class="fa-solid fa-check pill-check-icon"></i> SDG 2: Zero Hunger</span>
+            </div>
+            <input type="hidden" id="student-signup-interests" value="SDG 12: Responsible Consumption" />
+            <div class="input-group input-group-sm mt-2">
+              <input type="text" id="custom-interest-input" class="form-control" placeholder="Add a custom interest..." />
+              <button class="btn btn-outline-success" type="button" id="btn-add-custom-interest">
+                <i class="fa-solid fa-plus me-1"></i> Add Interest
+              </button>
+            </div>
+          </div>
+
+          <!-- Password with Masking and Security Indicator -->
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="form-label small fw-bold mb-0">Create Password</label>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text bg-light"><i class="fa-solid fa-lock text-muted"></i></span>
+              <input type="password" id="student-signup-pass" class="form-control form-control-sm" placeholder="Enter password (masked)" required />
+              <button class="btn btn-outline-secondary btn-sm" type="button" id="btn-toggle-signup-pass" title="Show/Hide Password">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+
+            <!-- Weak Password Inline Dialogue (Hidden by default, shown ONLY when entered password is weak) -->
+            <div id="weak-pass-inline-dialogue" class="alert alert-warning py-2 px-3 mt-2 mb-0 d-none" style="font-size: 0.78rem; border-radius: 8px;">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-warning fs-6"></i>
+                <div>
+                  <strong>Password is Weak:</strong> <span id="weak-pass-dialogue-text">Must be at least 8 characters with numbers or symbols.</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Captcha -->
@@ -152,25 +268,82 @@
             <label class="form-label small fw-bold">Security Captcha</label>
             <div class="captcha-container mb-2">
               <span class="captcha-badge" id="captcha-display-student-signup">8P3W9</span>
+              <button type="button" class="btn btn-sm btn-link text-decoration-none" id="btn-refresh-captcha-signup" title="Refresh Captcha">
+                <i class="fa-solid fa-rotate"></i>
+              </button>
             </div>
             <input type="text" id="student-signup-captcha" class="form-control form-control-sm" placeholder="Enter captcha code" required />
           </div>
 
-          <button type="submit" class="btn btn-success w-100 py-2 fw-bold">
-            <i class="fa-solid fa-user-plus me-2"></i> Register & Auto-Assign AI Task
+          <button type="submit" class="btn btn-success w-100 py-2 fw-bold" id="btn-submit-signup">
+            <i class="fa-solid fa-user-plus me-2"></i> Register Student Account
           </button>
         </form>
       </div>
     </div>
   </main>
 
+  <!-- Weak Password Dialogue Modal -->
+  <div class="modal fade" id="weakPasswordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content card-glass">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold text-warning">
+            <i class="fa-solid fa-shield-halved me-2"></i> Password Strength Notice
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="brand-logo-icon" style="background: rgba(245, 158, 11, 0.15); color: #d97706; width: 44px; height: 44px; font-size: 1.3rem;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0 text-dark">Password Categorized as Weak</h6>
+              <span class="text-muted small">Your entered password does not meet recommended security criteria.</span>
+            </div>
+          </div>
+          <div class="p-3 bg-light rounded-3 border mb-3 small">
+            <h6 class="fw-bold mb-2 text-dark"><i class="fa-solid fa-circle-check text-success me-1"></i> Recommended Criteria:</h6>
+            <ul class="mb-0 ps-3 text-muted" style="line-height: 1.6;">
+              <li>At least 8 characters in length</li>
+              <li>Include uppercase (A-Z) and lowercase (a-z) letters</li>
+              <li>Include numbers (0-9) and special characters (!@#$%^&*)</li>
+            </ul>
+          </div>
+          <p class="small text-muted mb-0">Would you like to strengthen your password now, or proceed with registration anyway?</p>
+        </div>
+        <div class="modal-footer border-top">
+          <button type="button" class="btn btn-outline-secondary" id="btn-weak-pass-proceed">Proceed Anyway</button>
+          <button type="button" class="btn btn-success fw-bold" id="btn-weak-pass-improve">
+            <i class="fa-solid fa-pen-to-square me-1"></i> Strengthen Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/supabase-client.js"></script>
   <script src="../js/data.js"></script>
   <script src="../js/state.js"></script>
   <script src="../js/ai-engine.js"></script>
+  <script src="../js/notifications.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (window.sdgSupabaseEnabled) {
+        const { data } = await window.sdgSupabase.auth.getSession();
+        if (data?.session?.user) {
+          const { data: profile } = await window.sdgSupabase.from("profiles").select("role").eq("id", data.session.user.id).single();
+          if (profile?.role === "student") {
+            window.location.replace("student-dashboard.html");
+            return;
+          }
+        }
+      }
       let currentCaptcha = "7X9K2";
       let currentSignupCaptcha = "8P3W9";
 
@@ -179,11 +352,44 @@
         let code = "";
         for (let i = 0; i < 5; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
         currentCaptcha = code;
-        document.getElementById("captcha-display-student").textContent = code;
+        const display = document.getElementById("captcha-display-student");
+        if (display) display.textContent = code;
       }
 
-      document.getElementById("btn-refresh-captcha-student").addEventListener("click", refreshCaptcha);
+      function refreshSignupCaptcha() {
+        const chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+        let code = "";
+        for (let i = 0; i < 5; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+        currentSignupCaptcha = code;
+        const display = document.getElementById("captcha-display-student-signup");
+        if (display) display.textContent = code;
+      }
+
+      document.getElementById("btn-refresh-captcha-student")?.addEventListener("click", refreshCaptcha);
+      document.getElementById("btn-refresh-captcha-signup")?.addEventListener("click", refreshSignupCaptcha);
       refreshCaptcha();
+      refreshSignupCaptcha();
+
+      // Show / Hide Password Toggles
+      const toggleLoginPass = document.getElementById("btn-toggle-login-pass");
+      const loginPassInput = document.getElementById("student-login-pass");
+      if (toggleLoginPass && loginPassInput) {
+        toggleLoginPass.addEventListener("click", () => {
+          const type = loginPassInput.type === "password" ? "text" : "password";
+          loginPassInput.type = type;
+          toggleLoginPass.innerHTML = type === "password" ? `<i class="fa-regular fa-eye"></i>` : `<i class="fa-regular fa-eye-slash"></i>`;
+        });
+      }
+
+      const toggleSignupPass = document.getElementById("btn-toggle-signup-pass");
+      const signupPassInput = document.getElementById("student-signup-pass");
+      if (toggleSignupPass && signupPassInput) {
+        toggleSignupPass.addEventListener("click", () => {
+          const type = signupPassInput.type === "password" ? "text" : "password";
+          signupPassInput.type = type;
+          toggleSignupPass.innerHTML = type === "password" ? `<i class="fa-regular fa-eye"></i>` : `<i class="fa-regular fa-eye-slash"></i>`;
+        });
+      }
 
       // Tab Toggles
       const loginTab = document.getElementById("student-tab-login");
@@ -191,22 +397,147 @@
       const loginBox = document.getElementById("student-form-login-box");
       const signupBox = document.getElementById("student-form-signup-box");
 
-      loginTab.addEventListener("click", () => {
+      loginTab?.addEventListener("click", () => {
         loginTab.classList.add("active");
         signupTab.classList.remove("active");
         loginBox.classList.remove("d-none");
         signupBox.classList.add("d-none");
       });
 
-      signupTab.addEventListener("click", () => {
+      signupTab?.addEventListener("click", () => {
         signupTab.classList.add("active");
         loginTab.classList.remove("active");
         signupBox.classList.remove("d-none");
         loginBox.classList.add("d-none");
       });
 
+      // Interactive Skills Selection
+      const skillsContainer = document.getElementById("skills-pill-container");
+      const skillsHidden = document.getElementById("student-signup-skills");
+      const skillsCountBadge = document.getElementById("skills-selected-count");
+
+      function updateSkillsState() {
+        const activePills = skillsContainer.querySelectorAll(".selectable-pill.active");
+        const list = Array.from(activePills).map(p => p.getAttribute("data-skill"));
+        skillsHidden.value = list.join(", ");
+        if (skillsCountBadge) skillsCountBadge.textContent = `${list.length} Selected`;
+      }
+
+      skillsContainer?.addEventListener("click", (e) => {
+        const pill = e.target.closest(".selectable-pill");
+        if (!pill) return;
+        pill.classList.toggle("active");
+        updateSkillsState();
+      });
+
+      document.getElementById("btn-add-custom-skill")?.addEventListener("click", () => {
+        const input = document.getElementById("custom-skill-input");
+        const val = input.value.trim();
+        if (!val) return;
+        const newPill = document.createElement("span");
+        newPill.className = "selectable-pill active";
+        newPill.setAttribute("data-skill", val);
+        newPill.innerHTML = `<i class="fa-solid fa-check pill-check-icon"></i> ${val}`;
+        skillsContainer.appendChild(newPill);
+        input.value = "";
+        updateSkillsState();
+      });
+
+      // Interactive Interests Selection
+      const interestsContainer = document.getElementById("interests-pill-container");
+      const interestsHidden = document.getElementById("student-signup-interests");
+      const interestsCountBadge = document.getElementById("interests-selected-count");
+
+      function updateInterestsState() {
+        const activePills = interestsContainer.querySelectorAll(".selectable-pill.active");
+        const list = Array.from(activePills).map(p => p.getAttribute("data-interest"));
+        interestsHidden.value = list.join(", ");
+        if (interestsCountBadge) interestsCountBadge.textContent = `${list.length} Selected`;
+      }
+
+      interestsContainer?.addEventListener("click", (e) => {
+        const pill = e.target.closest(".selectable-pill");
+        if (!pill) return;
+        pill.classList.toggle("active");
+        updateInterestsState();
+      });
+
+      document.getElementById("btn-add-custom-interest")?.addEventListener("click", () => {
+        const input = document.getElementById("custom-interest-input");
+        const val = input.value.trim();
+        if (!val) return;
+        const newPill = document.createElement("span");
+        newPill.className = "selectable-pill active";
+        newPill.setAttribute("data-interest", val);
+        newPill.innerHTML = `<i class="fa-solid fa-check pill-check-icon"></i> ${val}`;
+        interestsContainer.appendChild(newPill);
+        input.value = "";
+        updateInterestsState();
+      });
+
+      // Password Strength Verification (Hidden from initial view; shown only when weak)
+      function checkPasswordStrength(val) {
+        const hasLength = val.length >= 8;
+        const hasUpper = /[A-Z]/.test(val);
+        const hasLower = /[a-z]/.test(val);
+        const hasNumber = /[0-9]/.test(val);
+        const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val);
+
+        let score = 0;
+        if (hasLength) score++;
+        if (hasUpper) score++;
+        if (hasLower) score++;
+        if (hasNumber) score++;
+        if (hasSpecial) score++;
+
+        const inlineDialogue = document.getElementById("weak-pass-inline-dialogue");
+        const dialogueText = document.getElementById("weak-pass-dialogue-text");
+
+        if (val.length === 0) {
+          if (inlineDialogue) inlineDialogue.classList.add("d-none");
+          return 0;
+        }
+
+        // Show dialogue message ONLY when password is weak
+        if (score <= 2 || !hasLength) {
+          if (inlineDialogue) {
+            inlineDialogue.classList.remove("d-none");
+            let missing = [];
+            if (!hasLength) missing.push("min 8 chars");
+            if (!hasNumber) missing.push("number");
+            if (!hasSpecial) missing.push("special symbol");
+            if (dialogueText) {
+              dialogueText.textContent = "Please add " + (missing.join(", ") || "stronger characters") + ".";
+            }
+          }
+        } else {
+          // Hide completely once strong/fair
+          if (inlineDialogue) inlineDialogue.classList.add("d-none");
+        }
+
+        return score;
+      }
+
+      signupPassInput?.addEventListener("input", (e) => {
+        checkPasswordStrength(e.target.value);
+      });
+
+      // Social Logins (Google, GitHub, Facebook)
+      document.querySelectorAll(".btn-social-student").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const provider = btn.getAttribute("data-provider");
+          const res = window.appState.socialLoginStudent(provider);
+          if (res.success) {
+            await window.sdgNotify(`Verified via ${provider.toUpperCase()}!\nWelcome, ${res.user.name}.`, { kind: "success", title: "Sign-in successful" });
+            window.location.href = "student-dashboard.html";
+          } else {
+            alert(res.message);
+          }
+        });
+      });
+
       // Login Form Submit
-      document.getElementById("form-student-login").addEventListener("submit", (e) => {
+      document.getElementById("form-student-login")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const usnOrEmail = document.getElementById("student-login-usn").value.trim();
         const pass = document.getElementById("student-login-pass").value;
@@ -218,12 +549,19 @@
           return;
         }
 
-        window.appState.loginStudent(usnOrEmail, pass);
-        window.location.href = "student-dashboard.html";
+        const res = window.sdgSupabaseEnabled
+          ? await window.appState.remoteLoginStudent(usnOrEmail, pass)
+          : window.appState.loginStudent(usnOrEmail, pass);
+        if (res.success) {
+          await window.sdgNotify("Your student login was successful. Redirecting to your Student Portal...", { kind: "success", title: "Login successful", duration: 2200 });
+          window.location.replace("student-dashboard.html");
+        } else {
+          alert(res.message || "Invalid credentials. Please register or verify your USN/Password.");
+        }
       });
 
       // Signup Form Submit
-      document.getElementById("form-student-signup").addEventListener("submit", (e) => {
+      document.getElementById("form-student-signup")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const name = document.getElementById("student-signup-name").value.trim();
         const usn = document.getElementById("student-signup-usn").value.trim();
@@ -232,14 +570,84 @@
         const interests = document.getElementById("student-signup-interests").value.trim();
         const phone = document.getElementById("student-signup-phone").value.trim();
         const email = document.getElementById("student-signup-email").value.trim();
+        const skillLevel = document.getElementById("student-signup-skill-level")?.value || "intermediate";
+        const availableHours = document.getElementById("student-signup-hours")?.value || "4";
         const pass = document.getElementById("student-signup-pass").value;
+        const captcha = document.getElementById("student-signup-captcha").value.trim().toUpperCase();
 
-        window.appState.signupStudent({
-          name, usn, department: dept, skills, interests, phone, email, password: pass
-        });
+        if (captcha !== currentSignupCaptcha) {
+          alert("Invalid Captcha code! Please try again.");
+          refreshSignupCaptcha();
+          return;
+        }
 
-        alert("🎉 Registration successful! AI has analyzed your skills and assigned your first challenge. Redirecting to your dashboard...");
-        window.location.href = "student-dashboard.html";
+        const score = checkPasswordStrength(pass);
+        const hasLength = pass.length >= 8;
+
+        const submitButton = e.currentTarget.querySelector('button[type="submit"]');
+        let registrationInProgress = false;
+        const performStudentRegistration = async () => {
+          if (registrationInProgress) return;
+          registrationInProgress = true;
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.dataset.originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Creating account...';
+          }
+          try {
+            const res = window.sdgSupabaseEnabled
+              ? await window.appState.remoteSignupStudent({
+                  name, usn, department: dept, skills, interests, phone, email, password: pass,
+                  skillLevel, availableHours
+                })
+              : window.appState.signupStudent({
+              name, usn, department: dept, skills, interests, phone, email, password: pass,
+              skillLevel, availableHours
+            });
+            if (!res.success) {
+              alert(res.message || "Registration failed.");
+              return;
+            }
+            await window.sdgNotify("Your student account was created successfully. Redirecting to your Student Portal...", { kind: "success", title: "Registration successful", duration: 2500 });
+            window.location.replace("student-dashboard.html");
+          } catch (error) {
+            alert(error.message || "Registration failed. Please try again.");
+          } finally {
+            registrationInProgress = false;
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.innerHTML = submitButton.dataset.originalText || "Create Account";
+            }
+          }
+        };
+
+        // When password is weak, give a clear dialogue modal
+        if (score < 3 || !hasLength) {
+          const weakModalEl = document.getElementById("weakPasswordModal");
+          if (weakModalEl && typeof bootstrap !== "undefined") {
+            const weakModal = bootstrap.Modal.getOrCreateInstance(weakModalEl);
+
+            document.getElementById("btn-weak-pass-proceed").onclick = () => {
+              weakModal.hide();
+              performStudentRegistration();
+            };
+
+            document.getElementById("btn-weak-pass-improve").onclick = () => {
+              weakModal.hide();
+              signupPassInput?.focus();
+            };
+
+            weakModal.show();
+            return;
+          } else {
+            if (!confirm("⚠️ Password Strength Notice:\nYour password is categorized as Weak. We recommend at least 8 characters with numbers and symbols.\n\nDo you want to proceed anyway?")) {
+              signupPassInput?.focus();
+              return;
+            }
+          }
+        }
+
+        performStudentRegistration();
       });
     });
   </script>

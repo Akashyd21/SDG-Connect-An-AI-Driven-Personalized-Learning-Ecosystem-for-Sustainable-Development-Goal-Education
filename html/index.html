@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SDG Antigravity — Campus Sustainability Platform</title>
-  <meta name="description" content="A smart, modern platform connecting students and faculty to achieve the 17 UN Sustainable Development Goals with autonomous AI task assignment and Deep Learning milestones." />
+  <title>SDG Connect — Campus Sustainability Platform</title>
+  <meta name="description" content="A smart, modern platform connecting students and faculty to achieve the 17 UN Sustainable Development Goals through personalized activities and project guidance." />
 
   <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,23 +35,19 @@
       </a>
 
       <!-- Center Quick Navigation Links -->
-      <div class="d-none d-lg-flex align-items-center gap-2">
-        <a href="index.html" class="btn btn-sm btn-link text-decoration-none text-dark fw-semibold">Home</a>
-        <a href="student-dashboard.html" class="btn btn-sm btn-link text-decoration-none text-dark fw-semibold">Student Portal</a>
-        <a href="faculty-dashboard.html" class="btn btn-sm btn-link text-decoration-none text-dark fw-semibold">Faculty Portal</a>
+      <div class="d-none d-lg-flex align-items-center gap-3">
+        <a href="#hero-section" class="btn btn-sm btn-link text-decoration-none text-dark fw-semibold">Home</a>
+        <a href="#stats-section" class="btn btn-sm btn-link text-decoration-none text-muted fw-semibold">Impact Pulse</a>
+        <a href="#home-sdg-grid-section" class="btn btn-sm btn-link text-decoration-none text-muted fw-semibold">17 SDGs</a>
       </div>
 
-      <!-- Right Auth Actions -->
+      <!-- Right Auth Actions (Single clear entry point for each role) -->
       <div class="d-flex align-items-center gap-2">
-        <button class="btn btn-sm btn-icon-ghost" id="theme-toggle-btn" title="Toggle Dark/Light Mode">
-          <i class="fa-solid fa-moon text-secondary"></i>
-        </button>
-
-        <a href="student-login.html" class="btn btn-sm btn-outline-primary">
-          <i class="fa-solid fa-user-graduate me-1"></i> Student Login
+        <a href="student-login.html" class="btn btn-sm btn-outline-success fw-semibold">
+          <i class="fa-solid fa-user-graduate me-1"></i> Student Portal
         </a>
-        <a href="faculty-login.html" class="btn btn-sm btn-primary">
-          <i class="fa-solid fa-chalkboard-user me-1"></i> Faculty Login
+        <a href="faculty-login.html" class="btn btn-sm btn-outline-primary fw-semibold">
+          <i class="fa-solid fa-chalkboard-user me-1"></i> Faculty Portal
         </a>
       </div>
     </div>
@@ -59,7 +55,7 @@
 
   <!-- Hero Section -->
   <main class="home-view-section">
-    <section class="py-5 bg-light-subtle border-bottom">
+    <section class="py-5 bg-light-subtle border-bottom" id="hero-section">
       <div class="container py-4">
         <div class="row align-items-center g-5">
           <div class="col-lg-7">
@@ -70,26 +66,26 @@
               Transforming Campus Potential into <span class="text-success">Global SDG Impact</span>
             </h1>
             <p class="lead text-muted mb-4">
-              A smart, institutional platform where students take sustainability actions, complete <strong>Deep Learning AI projects</strong> across 4 milestones, and get guided step-by-step by an AI Mentor with multi-factor proof verification.
+              A smart, institutional platform where students discover personalized sustainability activities, complete meaningful projects, and get practical support from an AI Mentor.
             </p>
 
             <div class="d-flex flex-wrap gap-3 mb-4">
-              <a href="student-login.html" class="btn btn-primary btn-lg px-4 py-3 fw-bold">
-                <i class="fa-solid fa-user-graduate me-2"></i> Student Portal & Sign Up
+              <a href="student-login.html" class="btn btn-success btn-lg px-4 py-3 fw-bold">
+                <i class="fa-solid fa-user-graduate me-2"></i> Student Portal & Sign In
               </a>
               <a href="faculty-login.html" class="btn btn-outline-dark btn-lg px-4 py-3 fw-bold">
-                <i class="fa-solid fa-chalkboard-user me-2"></i> Faculty Dashboard
+                <i class="fa-solid fa-chalkboard-user me-2"></i> Faculty Portal
               </a>
             </div>
 
             <div class="d-flex align-items-center gap-4 text-muted small flex-wrap">
               <span><i class="fa-solid fa-shield-halved text-success me-1"></i> Multi-Factor Proof Verification</span>
               <span><i class="fa-solid fa-robot text-primary me-1"></i> Autonomous AI Task Manager</span>
-              <span><i class="fa-solid fa-microchip text-info me-1"></i> Deep Learning Milestones</span>
+              <span><i class="fa-solid fa-microchip text-info me-1"></i> Personalized Project Guidance</span>
             </div>
           </div>
 
-          <div class="col-lg-5">
+          <div class="col-lg-5" id="stats-section">
             <!-- Institutional Live Stats Card -->
             <div class="card-glass p-4 shadow-lg border">
               <div class="d-flex justify-content-between align-items-center mb-3">
@@ -137,7 +133,7 @@
     </section>
 
     <!-- 17 UN Sustainable Development Goals Grid -->
-    <section class="py-5">
+    <section class="py-5" id="home-sdg-grid-section">
       <div class="container">
         <div class="text-center max-w-700 mx-auto mb-5">
           <span class="badge bg-primary-soft text-primary px-3 py-1 mb-2 fw-bold">Global Framework</span>
@@ -166,25 +162,13 @@
   </div>
 
   <!-- Application Modules -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/data.js"></script>
   <script src="../js/state.js"></script>
   <script src="../js/ai-engine.js"></script>
   <script src="../js/chatbot.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Theme toggle
-      const toggleBtn = document.getElementById("theme-toggle-btn");
-      if (toggleBtn) {
-        toggleBtn.addEventListener("click", () => {
-          const cur = document.documentElement.getAttribute("data-theme") || "light";
-          const next = cur === "light" ? "dark" : "light";
-          document.documentElement.setAttribute("data-theme", next);
-          toggleBtn.innerHTML = next === "dark" 
-            ? `<i class="fa-solid fa-sun text-warning"></i>` 
-            : `<i class="fa-solid fa-moon text-secondary"></i>`;
-        });
-      }
-
       // Render 17 SDGs Grid
       const grid = document.getElementById("home-sdg-grid");
       if (grid && window.SDG_DATA) {

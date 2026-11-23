@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Faculty Portal — Sign In & Registration | SDG Antigravity</title>
+  <title>Faculty Portal — Sign In & Registration | SDG Connect</title>
 
   <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,7 +25,7 @@
         <div class="brand-logo-icon" style="background: linear-gradient(135deg, #0284c7, #6366f1);">
           <i class="fa-solid fa-chalkboard-user"></i>
         </div>
-        <span class="brand-logo-text">SDG <span class="text-primary">Antigravity</span></span>
+        <span class="brand-logo-text">SDG <span class="text-primary">Connect</span></span>
       </a>
       <div class="d-flex gap-2">
         <a href="index.html" class="btn btn-sm btn-outline-secondary">
@@ -46,6 +46,26 @@
         <p class="text-muted small">Monitor student progress, review submissions & create SDG activities</p>
       </div>
 
+      <!-- Social Sign In Options (Google, GitHub, Facebook) -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-muted d-block text-center mb-2">1-Click Faculty Access</label>
+        <div class="social-auth-grid">
+          <button type="button" class="social-auth-btn btn-social-faculty" data-provider="google" title="Sign In with Google">
+            <i class="fa-brands fa-google text-danger"></i> Google
+          </button>
+          <button type="button" class="social-auth-btn btn-social-faculty" data-provider="github" title="Sign In with GitHub">
+            <i class="fa-brands fa-github text-dark"></i> GitHub
+          </button>
+          <button type="button" class="social-auth-btn btn-social-faculty" data-provider="facebook" title="Sign In with Facebook">
+            <i class="fa-brands fa-facebook text-primary"></i> Facebook
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-divider">
+        <span>or with institutional credentials</span>
+      </div>
+
       <div class="auth-nav-pills">
         <button id="faculty-tab-login" class="active">Faculty Sign In</button>
         <button id="faculty-tab-signup">Faculty Registration</button>
@@ -58,7 +78,7 @@
             <label class="form-label small fw-bold">Faculty Institutional Email</label>
             <div class="input-group">
               <span class="input-group-text bg-light"><i class="fa-solid fa-envelope text-muted"></i></span>
-              <input type="email" id="faculty-login-email" class="form-control" placeholder="sarah.johnson@campus.edu" value="sarah.johnson@campus.edu" required />
+              <input type="email" id="faculty-login-email" class="form-control" placeholder="Enter institutional email (e.g. prof@campus.edu)" required />
             </div>
           </div>
 
@@ -69,7 +89,10 @@
             </div>
             <div class="input-group mt-1">
               <span class="input-group-text bg-light"><i class="fa-solid fa-lock text-muted"></i></span>
-              <input type="password" id="faculty-login-pass" class="form-control" placeholder="••••••••" value="password123" required />
+              <input type="password" id="faculty-login-pass" class="form-control" placeholder="Enter password" required />
+              <button class="btn btn-outline-secondary" type="button" id="btn-toggle-fac-login-pass" title="Show/Hide Password">
+                <i class="fa-regular fa-eye"></i>
+              </button>
             </div>
           </div>
 
@@ -98,15 +121,22 @@
             <input type="text" id="faculty-signup-name" class="form-control form-control-sm" placeholder="Dr. Deepa Nair" required />
           </div>
 
+          <div class="mb-2">
+            <label class="form-label small fw-bold">Designation</label>
+            <input type="text" id="faculty-signup-designation" class="form-control form-control-sm" placeholder="Assistant Professor" required />
+          </div>
+
           <div class="row g-2 mb-2">
-            <div class="col-md-6">
+        <div class="col-md-6">
               <label class="form-label small fw-bold">Department (DEPT)</label>
               <select id="faculty-signup-dept" class="form-select form-select-sm" required>
                 <option value="Computer Science & Engineering">Computer Science & Engineering</option>
                 <option value="Artificial Intelligence & ML">Artificial Intelligence & ML</option>
-                <option value="Environmental Engineering">Environmental Engineering</option>
+                <option value="Electronics & Communication Eng">Electronics & Communication Eng</option>
                 <option value="Electrical & Electronics Eng">Electrical & Electronics Eng</option>
                 <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil & Environmental Eng">Civil & Environmental Eng</option>
+                <option value="Information Science & Eng">Information Science & Eng</option>
               </select>
             </div>
             <div class="col-md-6">
@@ -120,9 +150,27 @@
             <input type="email" id="faculty-signup-email" class="form-control form-control-sm" placeholder="faculty@campus.edu" required />
           </div>
 
-          <div class="mb-2">
-            <label class="form-label small fw-bold">Password</label>
-            <input type="password" id="faculty-signup-pass" class="form-control form-control-sm" placeholder="••••••••" required />
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="form-label small fw-bold mb-0">Create Password</label>
+            </div>
+            <div class="input-group">
+              <span class="input-group-text bg-light"><i class="fa-solid fa-lock text-muted"></i></span>
+              <input type="password" id="faculty-signup-pass" class="form-control form-control-sm" placeholder="Enter password (masked)" required />
+              <button class="btn btn-outline-secondary btn-sm" type="button" id="btn-toggle-fac-signup-pass" title="Show/Hide Password">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+
+            <!-- Weak Password Inline Dialogue for Faculty (Hidden by default, shown ONLY when entered password is weak) -->
+            <div id="weak-pass-inline-dialogue-faculty" class="alert alert-warning py-2 px-3 mt-2 mb-0 d-none" style="font-size: 0.78rem; border-radius: 8px;">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-warning fs-6"></i>
+                <div>
+                  <strong>Password is Weak:</strong> <span id="weak-pass-dialogue-text-faculty">Must be at least 8 characters with numbers or symbols.</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="mb-3">
@@ -141,12 +189,66 @@
     </div>
   </main>
 
+  <!-- Weak Password Dialogue Modal for Faculty -->
+  <div class="modal fade" id="weakPasswordModalFaculty" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content card-glass">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold text-warning">
+            <i class="fa-solid fa-shield-halved me-2"></i> Password Strength Notice
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="brand-logo-icon" style="background: rgba(245, 158, 11, 0.15); color: #d97706; width: 44px; height: 44px; font-size: 1.3rem;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0 text-dark">Password Categorized as Weak</h6>
+              <span class="text-muted small">Your entered faculty password does not meet recommended security criteria.</span>
+            </div>
+          </div>
+          <div class="p-3 bg-light rounded-3 border mb-3 small">
+            <h6 class="fw-bold mb-2 text-dark"><i class="fa-solid fa-circle-check text-primary me-1"></i> Recommended for Faculty Security:</h6>
+            <ul class="mb-0 ps-3 text-muted" style="line-height: 1.6;">
+              <li>At least 8 characters in length</li>
+              <li>Include uppercase (A-Z) and lowercase (a-z) letters</li>
+              <li>Include numbers (0-9) and special characters (!@#$%^&*)</li>
+            </ul>
+          </div>
+          <p class="small text-muted mb-0">Would you like to strengthen your password now, or proceed with registration anyway?</p>
+        </div>
+        <div class="modal-footer border-top">
+          <button type="button" class="btn btn-outline-secondary" id="btn-weak-pass-proceed-faculty">Proceed Anyway</button>
+          <button type="button" class="btn btn-primary fw-bold" id="btn-weak-pass-improve-faculty">
+            <i class="fa-solid fa-pen-to-square me-1"></i> Strengthen Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/supabase-client.js"></script>
   <script src="../js/data.js"></script>
   <script src="../js/state.js"></script>
+  <script src="../js/notifications.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (window.sdgSupabaseEnabled) {
+        const { data } = await window.sdgSupabase.auth.getSession();
+        if (data?.session?.user) {
+          const { data: profile } = await window.sdgSupabase.from("profiles").select("role").eq("id", data.session.user.id).single();
+          if (profile?.role === "faculty") {
+            window.location.replace("faculty-dashboard.html");
+            return;
+          }
+        }
+      }
       let currentCaptcha = "5M9R4";
 
       function refreshCaptcha() {
@@ -179,7 +281,89 @@
         loginBox.classList.add("d-none");
       });
 
-      document.getElementById("form-faculty-login").addEventListener("submit", (e) => {
+      // Toggle Password Visibility
+      const toggleLoginPass = document.getElementById("btn-toggle-fac-login-pass");
+      const loginPassInput = document.getElementById("faculty-login-pass");
+      if (toggleLoginPass && loginPassInput) {
+        toggleLoginPass.addEventListener("click", () => {
+          const type = loginPassInput.type === "password" ? "text" : "password";
+          loginPassInput.type = type;
+          toggleLoginPass.innerHTML = type === "password" ? `<i class="fa-regular fa-eye"></i>` : `<i class="fa-regular fa-eye-slash"></i>`;
+        });
+      }
+
+      const toggleSignupPass = document.getElementById("btn-toggle-fac-signup-pass");
+      const signupPassInput = document.getElementById("faculty-signup-pass");
+      if (toggleSignupPass && signupPassInput) {
+        toggleSignupPass.addEventListener("click", () => {
+          const type = signupPassInput.type === "password" ? "text" : "password";
+          signupPassInput.type = type;
+          toggleSignupPass.innerHTML = type === "password" ? `<i class="fa-regular fa-eye"></i>` : `<i class="fa-regular fa-eye-slash"></i>`;
+        });
+      }
+
+      // Password Strength Verification (Hidden from initial view; shown only when weak)
+      function checkFacultyPasswordStrength(val) {
+        const hasLength = val.length >= 8;
+        const hasUpper = /[A-Z]/.test(val);
+        const hasLower = /[a-z]/.test(val);
+        const hasNumber = /[0-9]/.test(val);
+        const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val);
+
+        let score = 0;
+        if (hasLength) score++;
+        if (hasUpper) score++;
+        if (hasLower) score++;
+        if (hasNumber) score++;
+        if (hasSpecial) score++;
+
+        const inlineDialogue = document.getElementById("weak-pass-inline-dialogue-faculty");
+        const dialogueText = document.getElementById("weak-pass-dialogue-text-faculty");
+
+        if (val.length === 0) {
+          if (inlineDialogue) inlineDialogue.classList.add("d-none");
+          return 0;
+        }
+
+        // Show dialogue message ONLY when password is weak
+        if (score <= 2 || !hasLength) {
+          if (inlineDialogue) {
+            inlineDialogue.classList.remove("d-none");
+            let missing = [];
+            if (!hasLength) missing.push("min 8 chars");
+            if (!hasNumber) missing.push("numbers");
+            if (!hasSpecial) missing.push("special symbols");
+            if (dialogueText) {
+              dialogueText.textContent = "Please add " + (missing.join(", ") || "stronger characters") + ".";
+            }
+          }
+        } else {
+          // Hide completely once strong/fair
+          if (inlineDialogue) inlineDialogue.classList.add("d-none");
+        }
+
+        return score;
+      }
+
+      signupPassInput?.addEventListener("input", (e) => {
+        checkFacultyPasswordStrength(e.target.value);
+      });
+
+      // Social Logins (Google, GitHub, Facebook)
+      document.querySelectorAll(".btn-social-faculty").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const provider = btn.getAttribute("data-provider");
+          const res = window.appState.socialLoginFaculty(provider);
+          if (res.success) {
+            await window.sdgNotify(`Verified via ${provider.toUpperCase()}!\nWelcome, ${res.user.name}.`, { kind: "success", title: "Sign-in successful" });
+            window.location.href = "faculty-dashboard.html";
+          } else {
+            alert(res.message);
+          }
+        });
+      });
+
+      document.getElementById("form-faculty-login").addEventListener("submit", async (e) => {
         e.preventDefault();
         const email = document.getElementById("faculty-login-email").value.trim();
         const pass = document.getElementById("faculty-login-pass").value;
@@ -191,24 +375,91 @@
           return;
         }
 
-        window.appState.loginFaculty(email, pass);
-        window.location.href = "faculty-dashboard.html";
+        const res = window.sdgSupabaseEnabled
+          ? await window.appState.remoteLoginFaculty(email, pass)
+          : window.appState.loginFaculty(email, pass);
+        if (res.success) {
+          await window.sdgNotify("Your faculty login was successful. Redirecting to your Faculty Portal...", { kind: "success", title: "Login successful", duration: 2200 });
+          window.location.replace("faculty-dashboard.html");
+        } else {
+          alert(res.message || "Invalid faculty credentials. Please check your email and password.");
+        }
       });
 
-      document.getElementById("form-faculty-signup").addEventListener("submit", (e) => {
+      document.getElementById("form-faculty-signup").addEventListener("submit", async (e) => {
         e.preventDefault();
         const name = document.getElementById("faculty-signup-name").value.trim();
         const dept = document.getElementById("faculty-signup-dept").value;
+        const designation = document.getElementById("faculty-signup-designation")?.value.trim() || "Assistant Professor";
         const phone = document.getElementById("faculty-signup-phone").value.trim();
         const email = document.getElementById("faculty-signup-email").value.trim();
         const pass = document.getElementById("faculty-signup-pass").value;
 
-        window.appState.signupFaculty({
-          name, department: dept, phone, email, password: pass
-        });
+        const score = checkFacultyPasswordStrength(pass);
+        const hasLength = pass.length >= 8;
 
-        alert("Registration successful! Redirecting to faculty portal...");
-        window.location.href = "faculty-dashboard.html";
+        const submitButton = e.currentTarget.querySelector('button[type="submit"]');
+        let registrationInProgress = false;
+        const performFacultyRegistration = async () => {
+          if (registrationInProgress) return;
+          registrationInProgress = true;
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.dataset.originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> Creating account...';
+          }
+          try {
+            const res = window.sdgSupabaseEnabled
+              ? await window.appState.remoteSignupFaculty({
+                  name, department: dept, designation, phone, email, password: pass
+                })
+              : window.appState.signupFaculty({
+              name, department: dept, designation, phone, email, password: pass
+            });
+            if (!res.success) {
+              alert(res.message || "Registration failed.");
+              return;
+            }
+            await window.sdgNotify("Your faculty account was created successfully. Redirecting to the Faculty Portal...", { kind: "success", title: "Registration successful", duration: 2500 });
+            window.location.replace("faculty-dashboard.html");
+          } catch (error) {
+            alert(error.message || "Registration failed. Please try again.");
+          } finally {
+            registrationInProgress = false;
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.innerHTML = submitButton.dataset.originalText || "Create Account";
+            }
+          }
+        };
+
+        // When password is weak, give a clear dialogue modal
+        if (score < 3 || !hasLength) {
+          const weakModalEl = document.getElementById("weakPasswordModalFaculty");
+          if (weakModalEl && typeof bootstrap !== "undefined") {
+            const weakModal = bootstrap.Modal.getOrCreateInstance(weakModalEl);
+
+            document.getElementById("btn-weak-pass-proceed-faculty").onclick = () => {
+              weakModal.hide();
+              performFacultyRegistration();
+            };
+
+            document.getElementById("btn-weak-pass-improve-faculty").onclick = () => {
+              weakModal.hide();
+              signupPassInput?.focus();
+            };
+
+            weakModal.show();
+            return;
+          } else {
+            if (!confirm("⚠️ Password Strength Notice:\nYour faculty password is categorized as Weak. We recommend at least 8 characters with numbers and symbols.\n\nDo you want to proceed anyway?")) {
+              signupPassInput?.focus();
+              return;
+            }
+          }
+        }
+
+        performFacultyRegistration();
       });
     });
   </script>

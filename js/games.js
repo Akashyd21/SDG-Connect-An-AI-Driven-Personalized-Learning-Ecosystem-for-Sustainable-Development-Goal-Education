@@ -1,5 +1,5 @@
-// Games Engine for SDG Antigravity Web Platform
-// Mini-games: Eco-Sorter Challenge (SDG 12) and NetZero Campus Grid (SDG 7 & 13)
+// Games Engine for SDG Connect Web Platform
+// Mini-games cover practical decisions across multiple SDGs.
 
 class GamesEngine {
   constructor() {
@@ -8,6 +8,7 @@ class GamesEngine {
     this.score = 0;
     this.streak = 0;
     this.timeLeft = 45;
+    this.gameOrder = ["eco-sorter", "net-zero", "water-guardian", "city-planner", "biodiversity-keeper"];
 
     // Waste items bank for Eco-Sorter
     this.wasteItems = [
@@ -24,8 +25,25 @@ class GamesEngine {
     ];
   }
 
+  isGameUnlocked(gameId) {
+    const progress = window.appState.state.gameProgress || {};
+    const index = this.gameOrder.indexOf(gameId);
+    return index <= 0 || Boolean(progress[gameId]?.unlocked);
+  }
+
+  unlockNextGame(gameId) {
+    const progress = window.appState.state.gameProgress || {};
+    const index = this.gameOrder.indexOf(gameId);
+    progress[gameId] = { ...(progress[gameId] || {}), unlocked: true, completed: true };
+    const nextGame = this.gameOrder[index + 1];
+    if (nextGame) progress[nextGame] = { ...(progress[nextGame] || {}), unlocked: true };
+    window.appState.state.gameProgress = progress;
+    window.appState.save();
+  }
+
   // 1. Eco-Sorter Challenge Game
   startEcoSorter() {
+    if (!this.isGameUnlocked("eco-sorter")) return;
     this.activeGame = "eco-sorter";
     this.score = 0;
     this.streak = 0;
@@ -200,7 +218,9 @@ class GamesEngine {
         student.badges.push("Zero-Waste Sorter");
       }
       window.appState.save();
+      window.appState.saveGameScore({ gameId: "eco-sorter", score: this.score });
     }
+    this.unlockNextGame("eco-sorter");
 
     container.innerHTML = `
       <div class="card-glass text-center p-5 animate-fade-in my-3">
@@ -242,6 +262,10 @@ class GamesEngine {
 
   // 2. NetZero Campus Grid Challenge
   startNetZero() {
+    if (!this.isGameUnlocked("net-zero")) {
+      alert("Complete the previous game to unlock this game.");
+      return;
+    }
     this.activeGame = "net-zero";
     this.renderNetZeroUI();
   }
@@ -450,6 +474,8 @@ class GamesEngine {
               student.badges.push("NetZero Architect");
             }
             window.appState.save();
+            window.appState.saveGameScore({ gameId: "net-zero", score: m.netZeroPct });
+            this.unlockNextGame("net-zero");
             alert("🌟 Badge Unlocked: NetZero Architect! +150 Points credited to your profile.");
             this.renderGamesHub();
           }
@@ -461,6 +487,124 @@ class GamesEngine {
   }
 
   // Games Hub Overview Listing
+  startSdgChallenge(gameId) {
+    if (!this.isGameUnlocked(gameId)) {
+      alert("Complete the previous game to unlock this game.");
+      return;
+    }
+    const games = {
+      "water-guardian": {
+        title: "Water Guardian Sprint", sdgs: "SDG 6: Clean Water", icon: "💧", color: "#0d6efd",
+        intro: "Choose the best campus response to protect water quality and reduce waste.", badge: "Water Guardian",
+        questions: [
+          { prompt: "A hostel tap drips all day. What should happen first?", options: ["Report and repair the leak", "Ignore it because the drop is small", "Increase water pressure"], answer: 0, fact: "Fast leak reporting prevents thousands of litres of water loss." },
+          { prompt: "Which practice reduces greywater demand?", options: ["Reuse treated hand-wash water for gardens", "Rinse every path with a hose", "Use fresh water for toilet flushing"], answer: 0, fact: "Safe greywater reuse reduces freshwater demand." },
+          { prompt: "What is the safest way to protect a campus stream?", options: ["Keep chemicals and litter out of storm drains", "Flush chemicals into the drain", "Cover the stream with concrete"], answer: 0, fact: "Storm drains can carry pollutants directly to streams." },
+          { prompt: "A water test shows high nitrate levels. What is the best response?", options: ["Trace and reduce fertilizer runoff", "Add more fertilizer", "Stop testing"], answer: 0, fact: "Nutrient runoff can cause algal blooms and oxygen loss." }
+        ]
+      },
+      "city-planner": {
+        title: "Sustainable City Planner", sdgs: "SDG 11: Sustainable Cities", icon: "🏙️", color: "#6f42c1",
+        intro: "Make four planning decisions that keep a growing city inclusive, safe, and low-carbon.", badge: "City Planner",
+        questions: [
+          { prompt: "A new neighborhood needs transport. Which plan serves more people fairly?", options: ["Frequent buses, walking paths, and cycling lanes", "Only a large parking garage", "A highway through the neighborhood"], answer: 0, fact: "Public and active transport improves access while reducing emissions." },
+          { prompt: "Where should a heat-resilient public space be placed?", options: ["Near homes with trees, shade, and drinking water", "Behind an industrial fence", "Only inside a private mall"], answer: 0, fact: "Accessible shaded spaces help people cope with heat." },
+          { prompt: "What makes housing more resilient to flooding?", options: ["Protect wetlands and improve permeable drainage", "Build over every wetland", "Remove all rain gardens"], answer: 0, fact: "Wetlands and permeable surfaces absorb stormwater." },
+          { prompt: "Which indicator best checks inclusive city progress?", options: ["Access to safe services across neighborhoods", "Number of luxury towers only", "Total road width only"], answer: 0, fact: "Inclusion is measured by equitable access, not construction alone." }
+        ]
+      },
+      "biodiversity-keeper": {
+        title: "Biodiversity Keeper", sdgs: "SDG 15: Life on Land", icon: "🌿", color: "#198754",
+        intro: "Protect campus habitats by choosing actions that restore ecosystems and support native species.", badge: "Biodiversity Keeper",
+        questions: [
+          { prompt: "Which planting plan helps local pollinators most?", options: ["Native plants that flower across seasons", "One decorative invasive species", "Artificial grass everywhere"], answer: 0, fact: "Native plants provide food and habitat for local species." },
+          { prompt: "What should students do when they see an invasive plant?", options: ["Record it and report it to the campus ecology team", "Spread its seeds", "Move it to a forest"], answer: 0, fact: "Early reporting helps prevent invasive species from spreading." },
+          { prompt: "Why are wildlife corridors useful?", options: ["They connect fragmented habitats safely", "They remove all vegetation", "They increase traffic through habitats"], answer: 0, fact: "Connected habitats allow species to move and reproduce." },
+          { prompt: "Which campus light policy protects nocturnal wildlife?", options: ["Use shielded, motion-sensitive lights only where needed", "Keep every light at maximum brightness", "Point lights into tree canopies"], answer: 0, fact: "Lower light pollution protects insects, birds, and other night species." }
+        ]
+      }
+    };
+
+    const game = games[gameId];
+    if (!game) return;
+    this.activeGame = gameId;
+    this.challengeGame = game;
+    this.challengeIndex = 0;
+    this.challengeScore = 0;
+    this.renderSdgChallenge();
+  }
+
+  renderSdgChallenge() {
+    const container = document.getElementById("game-arena-mount");
+    const game = this.challengeGame;
+    const question = game.questions[this.challengeIndex];
+    if (!container || !question) return;
+
+    container.innerHTML = `
+      <div class="card-glass p-4 animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+          <button class="btn btn-sm btn-outline-secondary" id="btn-exit-challenge"><i class="fa-solid fa-arrow-left me-1"></i> Back to Games Menu</button>
+          <span class="badge px-3 py-2" style="background:${game.color}; color:#fff;">${game.sdgs}</span>
+        </div>
+        <div class="text-center mb-4">
+          <div style="font-size:4rem;">${game.icon}</div>
+          <h3 class="fw-bold mb-2">${game.title}</h3>
+          <p class="text-muted mb-0">${game.intro}</p>
+        </div>
+        <div class="progress mb-4" style="height:8px;"><div class="progress-bar" style="width:${((this.challengeIndex + 1) / game.questions.length) * 100}%; background:${game.color};"></div></div>
+        <p class="small text-muted">Decision ${this.challengeIndex + 1} of ${game.questions.length} · Score: ${this.challengeScore}</p>
+        <h4 class="fw-bold mb-4">${question.prompt}</h4>
+        <div class="d-grid gap-3">
+          ${question.options.map((option, index) => `<button class="btn btn-outline-primary text-start p-3 challenge-option" data-answer="${index}">${String.fromCharCode(65 + index)}. ${option}</button>`).join("")}
+        </div>
+      </div>`;
+
+    document.getElementById("btn-exit-challenge").addEventListener("click", () => this.renderGamesHub());
+    container.querySelectorAll(".challenge-option").forEach(button => {
+      button.addEventListener("click", () => this.answerSdgChallenge(Number(button.dataset.answer)));
+    });
+  }
+
+  answerSdgChallenge(answer) {
+    const question = this.challengeGame.questions[this.challengeIndex];
+    const buttons = document.querySelectorAll(".challenge-option");
+    buttons.forEach(button => { button.disabled = true; });
+    const selected = buttons[answer];
+    if (answer === question.answer) {
+      this.challengeScore += 100;
+      if (selected) selected.classList.replace("btn-outline-primary", "btn-success");
+    } else {
+      if (selected) selected.classList.replace("btn-outline-primary", "btn-danger");
+      if (buttons[question.answer]) buttons[question.answer].classList.replace("btn-outline-primary", "btn-success");
+    }
+    const feedback = document.createElement("p");
+    feedback.className = "alert alert-light border mt-4 mb-0";
+    feedback.innerHTML = `<strong>${answer === question.answer ? "Correct!" : "Not quite."}</strong> ${question.fact}`;
+    document.querySelector("#game-arena-mount .d-grid").after(feedback);
+    setTimeout(() => {
+      this.challengeIndex++;
+      if (this.challengeIndex >= this.challengeGame.questions.length) this.finishSdgChallenge();
+      else this.renderSdgChallenge();
+    }, 1100);
+  }
+
+  finishSdgChallenge() {
+    const rewardPoints = Math.round(this.challengeScore / 2);
+    const student = window.appState.state.currentUser;
+    if (student && rewardPoints > 0) {
+      student.points = (student.points || 0) + rewardPoints;
+      if (!student.badges.includes(this.challengeGame.badge)) student.badges.push(this.challengeGame.badge);
+      window.appState.save();
+      window.appState.saveGameScore({ gameId: this.activeGame, score: this.challengeScore });
+    }
+    this.unlockNextGame(this.activeGame);
+    const container = document.getElementById("game-arena-mount");
+    if (!container) return;
+    container.innerHTML = `<div class="card-glass text-center p-5 animate-fade-in"><div style="font-size:4rem;">${this.challengeGame.icon}</div><h2 class="fw-bold">Challenge Complete!</h2><p class="text-muted">${this.challengeGame.title}</p><h3 class="text-primary">${this.challengeScore} / ${this.challengeGame.questions.length * 100}</h3><p class="text-warning fw-bold">+${rewardPoints} SDG reward points</p><button class="btn btn-primary me-2" id="btn-replay-challenge">Play Again</button><button class="btn btn-outline-secondary" id="btn-back-challenge">Games Hub</button></div>`;
+    document.getElementById("btn-replay-challenge").addEventListener("click", () => this.startSdgChallenge(this.activeGame));
+    document.getElementById("btn-back-challenge").addEventListener("click", () => this.renderGamesHub());
+  }
+
   renderGamesHub() {
     const container = document.getElementById("student-subpage-container");
     if (!container) return;
@@ -470,7 +614,7 @@ class GamesEngine {
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
           <div>
             <h3 class="fw-bold mb-1">🎮 SDG Interactive Mini-Games</h3>
-            <p class="text-muted mb-0">Learn sustainability through fast-paced simulations, challenge high scores, and earn SDG reward points.</p>
+            <p class="text-muted mb-0">Complete each game to unlock the next one. Learn sustainability through challenges, high scores, and SDG reward points.</p>
           </div>
         </div>
 
@@ -533,13 +677,81 @@ class GamesEngine {
                 </div>
               </div>
             </div>
+
+            <!-- Game 3: Water Guardian -->
+            <div class="col-md-6">
+              <div class="card-glass game-teaser-card h-100 p-4 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge bg-primary-soft text-primary px-3 py-2"><i class="fa-solid fa-droplet me-1"></i> SDG 6: Clean Water</span>
+                    <span class="badge bg-info-soft text-info px-2 py-1">Decision Sprint</span>
+                  </div>
+                  <div class="text-center my-3"><span style="font-size:4rem;">💧</span></div>
+                  <h4 class="fw-bold mb-2">Water Guardian Sprint</h4>
+                  <p class="text-muted small">Respond to leaks, runoff, and water-quality problems in a campus sustainability challenge.</p>
+                </div>
+                <button class="btn btn-primary w-100 py-2 fw-bold" id="btn-launch-water-guardian"><i class="fa-solid fa-play me-2"></i> Play Water Guardian</button>
+              </div>
+            </div>
+
+            <!-- Game 4: Sustainable City Planner -->
+            <div class="col-md-6">
+              <div class="card-glass game-teaser-card h-100 p-4 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge px-3 py-2" style="background:#6f42c120;color:#6f42c1;"><i class="fa-solid fa-city me-1"></i> SDG 11: Sustainable Cities</span>
+                    <span class="badge bg-info-soft text-info px-2 py-1">Planning Sprint</span>
+                  </div>
+                  <div class="text-center my-3"><span style="font-size:4rem;">🏙️</span></div>
+                  <h4 class="fw-bold mb-2">Sustainable City Planner</h4>
+                  <p class="text-muted small">Make tough planning choices about transport, housing, public space, and flood resilience.</p>
+                </div>
+                <button class="btn btn-primary w-100 py-2 fw-bold" id="btn-launch-city-planner"><i class="fa-solid fa-play me-2"></i> Plan the City</button>
+              </div>
+            </div>
+
+            <!-- Game 5: Biodiversity Keeper -->
+            <div class="col-md-6">
+              <div class="card-glass game-teaser-card h-100 p-4 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge bg-success-soft text-success px-3 py-2"><i class="fa-solid fa-seedling me-1"></i> SDG 15: Life on Land</span>
+                    <span class="badge bg-info-soft text-info px-2 py-1">Ecology Sprint</span>
+                  </div>
+                  <div class="text-center my-3"><span style="font-size:4rem;">🌿</span></div>
+                  <h4 class="fw-bold mb-2">Biodiversity Keeper</h4>
+                  <p class="text-muted small">Protect habitats, native species, pollinators, and wildlife corridors around campus.</p>
+                </div>
+                <button class="btn btn-success w-100 py-2 fw-bold" id="btn-launch-biodiversity"><i class="fa-solid fa-play me-2"></i> Protect Biodiversity</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     `;
 
+    const launchButtons = {
+      "eco-sorter": "btn-launch-eco-sorter",
+      "net-zero": "btn-launch-netzero",
+      "water-guardian": "btn-launch-water-guardian",
+      "city-planner": "btn-launch-city-planner",
+      "biodiversity-keeper": "btn-launch-biodiversity"
+    };
+    this.gameOrder.forEach(gameId => {
+      if (this.isGameUnlocked(gameId)) return;
+      const button = document.getElementById(launchButtons[gameId]);
+      if (!button) return;
+      button.disabled = true;
+      button.className = "btn btn-light text-muted border w-100 py-2 fw-bold";
+      button.innerHTML = '<i class="fa-solid fa-lock me-2"></i> Locked';
+      button.closest(".game-teaser-card")?.classList.add("opacity-75");
+    });
+
     document.getElementById("btn-launch-eco-sorter").addEventListener("click", () => this.startEcoSorter());
     document.getElementById("btn-launch-netzero").addEventListener("click", () => this.startNetZero());
+    document.getElementById("btn-launch-water-guardian").addEventListener("click", () => this.startSdgChallenge("water-guardian"));
+    document.getElementById("btn-launch-city-planner").addEventListener("click", () => this.startSdgChallenge("city-planner"));
+    document.getElementById("btn-launch-biodiversity").addEventListener("click", () => this.startSdgChallenge("biodiversity-keeper"));
   }
 }
 
